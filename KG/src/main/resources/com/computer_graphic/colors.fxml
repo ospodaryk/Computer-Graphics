@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane maxHeight="450" maxWidth="720" minHeight="450" minWidth="720" prefHeight="450.0" prefWidth="720.0"
+            styleClass="anchor" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.computer_graphic.controllers.ColorsController">
+
+    <children>
+        <AnchorPane prefHeight="450.0" prefWidth="192.0">
+            <children>
+                <Group layoutX="560.0" layoutY="180.0"/>
+                <VBox alignment="CENTER" layoutX="28.0" layoutY="150.0"/>
+                <VBox alignment="CENTER" layoutX="32.0" layoutY="84.0"/>
+
+                <Button fx:id="btnSave" layoutX="1100.0" layoutY="215.0" mnemonicParsing="false"
+                        onAction="#saveCanvasToFile" prefHeight="30.0" prefWidth="150.0"
+                        style="-fx-background-color: #FEC33B;" text="Зберегти">
+                    <font>
+                        <Font name="Times New Roman Regular" size="20.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="btnOpen" layoutX="1100.0" layoutY="300.0" mnemonicParsing="false" onAction="#chooseImage"
+                        prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FEC33B;" text="Обрати фото">
+                    <font>
+                        <Font name="Times New Roman Regular" size="20.0"/>
+                    </font>
+                </Button>
+
+                <Text layoutX="700.0" layoutY="480.0" text="HSL" textAlignment="CENTER" wrappingWidth="250">
+                    <font>
+                        <Font name="Times New Roman Bold" size="22.0"/>
+                    </font>
+                </Text>
+                <Text fx:id="hslLine" layoutX="700.0" layoutY="510.0" text="(360, 100%, 100%)" textAlignment="CENTER"
+                      wrappingWidth="250">
+                    <font>
+                        <Font name="Times New Roman Regular" size="20.0"/>
+                    </font>
+                </Text>
+                <Text layoutX="700.0" layoutY="560.0" text="RGB" textAlignment="CENTER" wrappingWidth="250">
+                    <font>
+                        <Font name="Times New Roman Bold" size="22.0"/>
+                    </font>
+                </Text>
+                <Text fx:id="rgbLine" layoutX="700.0" layoutY="590.0" text="(256, 256, 256)" textAlignment="CENTER"
+                      wrappingWidth="250">
+                    <font>
+                        <Font name="Times New Roman Regular" size="20.0"/>
+                    </font>
+                </Text>
+            </children>
+        </AnchorPane>
+        <Slider fx:id="lightnessSlider" layoutX="460.0" layoutY="800.0" min="-100.0" minorTickCount="1"
+                prefHeight="70.0" prefWidth="450.0" showTickMarks="true"/>
+        <Text fx:id="lightnessText" layoutX="460.0" layoutY="780.0" text="Яскравість: 0%" wrappingWidth="300">
+            <font>
+                <Font name="Times New Roman Bold" size="24.0"/>
+            </font>
+        </Text>
+        <Canvas fx:id="colorCanvas" height="100.0" layoutX="600.0" layoutY="480.0" width="100.0"/>
+        <Canvas fx:id="rectangleCanvas" height="70.0" layoutX="120.0" layoutY="300.0" width="70.0"/>
+        <Text layoutX="460.0" layoutY="640.0" text="Працювати з:" textAlignment="CENTER" wrappingWidth="200">
+            <font>
+                <Font name="Times New Roman Bold" size="24.0"/>
+            </font>
+        </Text>
+        <ComboBox fx:id="colorsComboBox" layoutX="460.0" layoutY="660.0"  prefHeight="40.0"  prefWidth="450.0"  styleClass="combo-box-popup ">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="червоним" />
+                    <String fx:value="жовтим"/>
+                    <String fx:value="зеленим"/>
+                    <String fx:value="блакитним"/>
+                    <String fx:value="синім"/>
+                    <String fx:value="пурпуровим"/>
+                    <String fx:value="усіма наявними кольорами"/>
+                </FXCollections>
+
+            </items>
+
+        </ComboBox>
+        <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="350.0" layoutX="730.0" layoutY="100.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="imageOriginal" fitHeight="350.0" fitWidth="350.0" layoutX="370.0" layoutY="100.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+    </children>
+</AnchorPane>

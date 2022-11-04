@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+    <AnchorPane  maxHeight="910" maxWidth="1280" minHeight="910" minWidth="1280" prefHeight="910.0" prefWidth="1280.0" styleClass="m" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.computer_graphic.controllers.MainController">
+
+    <children>
+
+        <Group onMouseClicked="#switchToColors" layoutX="220.0" layoutY="190.0">
+            <children>
+                <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: yellow;" />
+                <Text layoutX="30.0" layoutY="42.0" text="                      ">
+                    <font>
+                        <Font name="Monospaced Bold" size="29.0" />
+                    </font>
+                </Text>
+
+            </children>
+        </Group>
+        <Group onMouseClicked="#switchToAF" layoutX="220.0" layoutY="270.0">
+            <children>
+                <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: green;" />
+                <Text layoutX="30.0" layoutY="42.0" text="                      ">
+                    <font>
+                        <Font name="Monospaced Bold" size="29.0" />
+                    </font>
+                </Text>
+
+            </children>
+        </Group>
+    </children>
+</AnchorPane>

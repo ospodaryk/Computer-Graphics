@@ -12,9 +12,9 @@
 
     <children>
 
-        <Group onMouseClicked="#switchToColors" layoutX="220.0" layoutY="190.0">
+        <Group onMouseClicked="#switchToColors" layoutX="395.0" layoutY="380.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: yellow;" />
+                <Button mnemonicParsing="false" prefHeight="125.0" prefWidth="500.0"  style="-fx-background-color: transparent;" />
                 <Text layoutX="30.0" layoutY="42.0" text="                      ">
                     <font>
                         <Font name="Monospaced Bold" size="29.0" />
@@ -23,9 +23,9 @@
 
             </children>
         </Group>
-        <Group onMouseClicked="#switchToAF" layoutX="220.0" layoutY="270.0">
+        <Group onMouseClicked="#switchToAF" layoutX="395.0" layoutY="550.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: green;" />
+                <Button mnemonicParsing="false" prefHeight="125.0" prefWidth="500.0" style="-fx-background-color: yellow;" />
                 <Text layoutX="30.0" layoutY="42.0" text="                      ">
                     <font>
                         <Font name="Monospaced Bold" size="29.0" />

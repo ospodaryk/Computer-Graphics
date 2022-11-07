@@ -50,8 +50,15 @@ public class AFController implements Initializable {
     public Spinner Y;
     public Spinner SIZE;
     public Spinner ANGLE;
+    Timeline timeline = new Timeline();
+    Path path = new Path();
+    MoveTo corner1 = new MoveTo();
+    LineTo corner2 = new LineTo();
+    LineTo corner3 = new LineTo();
+    LineTo corner4 = new LineTo();
+    LineTo corner5 = new LineTo();
+    LineTo corner6 = new LineTo();
 
-    SequentialTransition sequentialTransition = new SequentialTransition();
     @FXML
     private void backToMain() throws IOException {
         App.setRoot("main");
@@ -80,43 +87,195 @@ public class AFController implements Initializable {
 
         ArrayList<ArrayList<Double>> our_newx_dots = turnDotsWithAngle(0, 0, 1, 0, 150, 113.39);
         canvas.getChildren().remove(hexagon);
-        hexagon.getPoints().removeAll();
-        hexagon.getPoints().clear();
-        hexagon.getPoints().addAll(our_newx_dots.get(0).get(0), our_newx_dots.get(0).get(1),
-                our_newx_dots.get(1).get(0), our_newx_dots.get(1).get(1),
-                our_newx_dots.get(2).get(0), our_newx_dots.get(2).get(1),
-                our_newx_dots.get(3).get(0), our_newx_dots.get(3).get(1),
-                our_newx_dots.get(4).get(0), our_newx_dots.get(4).get(1),
-                our_newx_dots.get(5).get(0), our_newx_dots.get(5).get(1)
+        canvas.getChildren().remove(path);
+
+
+//        hexagon.getPoints().removeAll();
+//        hexagon.getPoints().clear();
+//        hexagon.getPoints().addAll(our_newx_dots.get(0).get(0), our_newx_dots.get(0).get(1),
+//                our_newx_dots.get(1).get(0), our_newx_dots.get(1).get(1),
+//                our_newx_dots.get(2).get(0), our_newx_dots.get(2).get(1),
+//                our_newx_dots.get(3).get(0), our_newx_dots.get(3).get(1),
+//                our_newx_dots.get(4).get(0), our_newx_dots.get(4).get(1),
+//                our_newx_dots.get(5).get(0), our_newx_dots.get(5).get(1)
+//        );
+//        canvas.getChildren().add(hexagon);
+
+
+
+        path = new Path(corner1, corner2, corner3, corner4, corner5, corner6, new ClosePath());
+        canvas.getChildren().add(path);
+        int startangle=0;
+        int step=10;
+        ArrayList<ArrayList<Double>> our_newx_dot2 = turnDotsWithAngle(0, 0, 1, startangle+2*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot3 = turnDotsWithAngle(0, 0, 1, startangle+4*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot4 = turnDotsWithAngle(0, 0, 1, startangle+6*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot5 = turnDotsWithAngle(0, 0, 1, startangle+8*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot6 = turnDotsWithAngle(0, 0, 1, startangle+10*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot7 = turnDotsWithAngle(0, 0, 1, startangle+12*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot8 = turnDotsWithAngle(0, 0, 1, startangle+14*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot9 = turnDotsWithAngle(0, 0, 1, startangle+16*step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot10 = turnDotsWithAngle(0, 0, 1, startangle+18*step, 150, 113.39);
+
+        int seconds=1;
+        timeline = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(corner1.xProperty(), our_newx_dots.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dots.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dots.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dots.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dots.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dots.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dots.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dots.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dots.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dots.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dots.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dots.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds),
+                        new KeyValue(corner1.xProperty(), our_newx_dot2.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot2.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot2.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot2.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot2.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot2.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot2.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot2.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot2.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot2.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot2.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot2.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds*2),
+                        new KeyValue(corner1.xProperty(), our_newx_dot3.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot3.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot3.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot3.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot3.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot3.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot3.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot3.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot3.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot3.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot3.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot3.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds*3),
+                        new KeyValue(corner1.xProperty(), our_newx_dot4.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot4.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot4.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot4.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot4.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot4.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot4.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot4.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot4.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot4.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot4.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot4.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds*4),
+                        new KeyValue(corner1.xProperty(), our_newx_dot5.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot5.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot5.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot5.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot5.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot5.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot5.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot5.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot5.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot5.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot5.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot5.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds*5),
+                        new KeyValue(corner1.xProperty(), our_newx_dot6.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot6.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot6.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot6.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot6.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot6.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot6.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot6.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot6.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot6.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot6.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot6.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds*6),
+                        new KeyValue(corner1.xProperty(), our_newx_dot7.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot7.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot7.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot7.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot7.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot7.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot7.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot7.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot7.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot7.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot7.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot7.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds*7),
+                        new KeyValue(corner1.xProperty(), our_newx_dot8.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot8.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot8.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot8.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot8.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot8.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot8.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot8.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot8.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot8.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot8.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot8.get(5).get(1)))
+                ,
+                new KeyFrame(Duration.seconds(seconds*8),
+                        new KeyValue(corner1.xProperty(), our_newx_dot9.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot9.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot9.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot9.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot9.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot9.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot9.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot9.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot9.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot9.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot9.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot9.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds*9),
+                        new KeyValue(corner1.xProperty(), our_newx_dot10.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot10.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot10.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot10.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot10.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot10.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot10.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot10.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot10.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot10.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot10.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot10.get(5).get(1)))
+
+
+
+
         );
-        canvas.getChildren().add(hexagon);
-
-//        path.getElements().add(new MoveTo(our_newx_dots1.get(0).get(1),our_newx_dots1.get(0).get(1)));
-//        path.getElements().add(new LineTo(a,b));
-
-        RotateTransition rotateTransition = new RotateTransition(Duration.millis(2000), hexagon);
-        rotateTransition.setByAngle(180f);
-        rotateTransition.setCycleCount(4);
-        rotateTransition.setAutoReverse(true);
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(2000), hexagon);
-        scaleTransition.setFromX(1);
-        scaleTransition.setFromY(1);
-        scaleTransition.setToX(2);
-        scaleTransition.setToY(2);
-        scaleTransition.setCycleCount(1);
-        scaleTransition.setAutoReverse(true);
-
-        sequentialTransition.getChildren().addAll(rotateTransition, scaleTransition);
-        sequentialTransition.setCycleCount(Timeline.INDEFINITE);
-        sequentialTransition.setAutoReverse(true);
-        sequentialTransition.play();
+        timeline.setAutoReverse(true);
+        timeline.play();
 
     }
 
     @FXML
     private void stopAnimation() throws InterruptedException {
-        sequentialTransition.stop();
-    }
+        //добавти чек
+        timeline.stop();
+        hexagon.getPoints().removeAll();
+        hexagon.getPoints().clear();
+        hexagon.getPoints().addAll(corner1.xProperty().get(),corner1.yProperty().get(),
+                corner2.xProperty().get(),corner2.yProperty().get(),
+                corner3.xProperty().get(),corner3.yProperty().get(),
+                corner4.xProperty().get(),corner4.yProperty().get(),
+                corner5.xProperty().get(),corner5.yProperty().get(),
+                corner6.xProperty().get(),corner6.yProperty().get()
+        );
+        canvas.getChildren().add(hexagon);
+
+        }
 
     private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
 

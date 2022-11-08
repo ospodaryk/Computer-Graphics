@@ -41,6 +41,7 @@ import static javax.swing.text.html.HTML.Tag.*;
 public class AFController implements Initializable {
     private static Integer UNIT = 20;
     private static Integer CANVAS_SIZE = 250;
+    private static Integer UNIT_LENGTH = 10;
 
     private static final int CANVAS_WIDTH = 400;
     private static final int CANVAS_HEIGHT = 400;
@@ -74,7 +75,7 @@ public class AFController implements Initializable {
         System.out.println("======================================");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * UNIT;
+        double tmplength = koef * UNIT_LENGTH;
         double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
         double tmpcentry = centery * UNIT + CANVAS_SIZE;
         ArrayList<Double> v1 = new ArrayList<>();
@@ -130,7 +131,7 @@ public class AFController implements Initializable {
         System.out.println("FLIPFLAPCHANGE");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * UNIT;
+        double tmplength = koef * UNIT_LENGTH;
         double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
         double tmpcentry = centery * UNIT + CANVAS_SIZE;
         double x = 0;
@@ -212,7 +213,7 @@ public class AFController implements Initializable {
 
     private ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double angle) {
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = length.get() * UNIT/2;
+        double tmplength = length.get() * UNIT_LENGTH;
         double tmpcentrx = centerx.get() * UNIT + CANVAS_SIZE;
         double tmpcentry = centery.get() * UNIT + CANVAS_SIZE;
         double x = 0;
@@ -299,36 +300,37 @@ public class AFController implements Initializable {
     @FXML
     private void startAnimation() throws InterruptedException {
 
-        ArrayList<ArrayList<Double>> our_newx_dots = turnDotsWithAngle(0, 0, 1, 0, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dots = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), 0, 150, 113.39);
         canvas.getChildren().remove(hexagon);
         canvas.getChildren().remove(path);
+        corner1.xProperty().set(hexagon.getPoints().get(0));
+        corner1.yProperty().set(hexagon.getPoints().get(1));
+        corner2.xProperty().set(hexagon.getPoints().get(2));
+        corner2.yProperty().set(hexagon.getPoints().get(3));
+        corner3.xProperty().set(hexagon.getPoints().get(4));
+        corner3.yProperty().set(hexagon.getPoints().get(5));
+        corner4.xProperty().set(hexagon.getPoints().get(6));
+        corner4.yProperty().set(hexagon.getPoints().get(7));
+        corner5.xProperty().set(hexagon.getPoints().get(8));
+        corner5.yProperty().set(hexagon.getPoints().get(9));
+        corner6.xProperty().set(hexagon.getPoints().get(10));
+        corner6.yProperty().set(hexagon.getPoints().get(11));
 
-
-//        hexagon.getPoints().removeAll();
-//        hexagon.getPoints().clear();
-//        hexagon.getPoints().addAll(our_newx_dots.get(0).get(0), our_newx_dots.get(0).get(1),
-//                our_newx_dots.get(1).get(0), our_newx_dots.get(1).get(1),
-//                our_newx_dots.get(2).get(0), our_newx_dots.get(2).get(1),
-//                our_newx_dots.get(3).get(0), our_newx_dots.get(3).get(1),
-//                our_newx_dots.get(4).get(0), our_newx_dots.get(4).get(1),
-//                our_newx_dots.get(5).get(0), our_newx_dots.get(5).get(1)
-//        );
-//        canvas.getChildren().add(hexagon);
 
 
         path = new Path(corner1, corner2, corner3, corner4, corner5, corner6, new ClosePath());
         canvas.getChildren().add(path);
         int startangle = 0;
         int step = 10;
-        ArrayList<ArrayList<Double>> our_newx_dot2 = turnDotsWithAngle(0, 0, 1, startangle + 2 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot3 = turnDotsWithAngle(0, 0, 1, startangle + 4 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot4 = turnDotsWithAngle(0, 0, 1, startangle + 6 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot5 = turnDotsWithAngle(0, 0, 1, startangle + 8 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot6 = turnDotsWithAngle(0, 0, 1, startangle + 10 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot7 = turnDotsWithAngle(0, 0, 1, startangle + 12 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot8 = turnDotsWithAngle(0, 0, 1, startangle + 14 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot9 = turnDotsWithAngle(0, 0, 1, startangle + 16 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot10 = turnDotsWithAngle(0, 0, 1, startangle + 18 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot2 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 2 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot3 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 4 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot4 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 6 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot5 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 8 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot6 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 10 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot7 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 12 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot8 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 14 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot9 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 16 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot10 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 18 * step, 150, 113.39);
 
         int seconds = 1;
         timeline = new Timeline(

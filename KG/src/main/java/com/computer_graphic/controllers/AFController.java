@@ -418,7 +418,7 @@ public class AFController implements Initializable {
         return y;
     }
 
-    private static ArrayList<ArrayList<Double>> findDotsWithAngle(double centerx, double centery, double koef, double angle) {
+    private static ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double centerx, double centery, double koef, double angle) {
         System.out.println("======================================");
 
         System.out.println("FLIPFLAPCHANGE");
@@ -492,6 +492,18 @@ public class AFController implements Initializable {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         hexagon = new Polygon();
@@ -527,7 +539,7 @@ public class AFController implements Initializable {
         System.out.println(length.get());
         System.out.println("---------------------------------------------");
 
-        ArrayList<ArrayList<Double>> ourdots = findDotsWithAngle(centerx.get(), centery.get(), length.get(), angle.get());
+        ArrayList<ArrayList<Double>> ourdots = findDotsWhenTurnAroundCenter(centerx.get(), centery.get(), length.get(), angle.get());
 //        ArrayList<ArrayList<Double>> ourdots = findDots(centerx.get(), centery.get(), length.get());
 
 
@@ -546,7 +558,7 @@ public class AFController implements Initializable {
 
             System.out.println("NEWX:" + newValue);
             centerx.set(newValue);
-            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWithAngle(centerx.get(), centery.get(), length.get(), angle.get());
+            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(centerx.get(), centery.get(), length.get(), angle.get());
             canvas.getChildren().remove(hexagon);
             hexagon.getPoints().removeAll();
             hexagon.getPoints().clear();
@@ -563,7 +575,7 @@ public class AFController implements Initializable {
         Y.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
             System.out.println("NEWX:" + newValue);
             centery.set(newValue);
-            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWithAngle(centerx.get(), centery.get(), length.get(), angle.get());
+            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(centerx.get(), centery.get(), length.get(), angle.get());
             canvas.getChildren().remove(hexagon);
             hexagon.getPoints().removeAll();
             hexagon.getPoints().clear();
@@ -581,7 +593,7 @@ public class AFController implements Initializable {
         SIZE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
             System.out.println("NEWX:" + newValue);
             length.set(newValue);
-            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWithAngle(centerx.get(), centery.get(), length.get(), angle.get());
+            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(centerx.get(), centery.get(), length.get(), angle.get());
             canvas.getChildren().remove(hexagon);
             hexagon.getPoints().removeAll();
             hexagon.getPoints().clear();
@@ -599,8 +611,8 @@ public class AFController implements Initializable {
             System.out.println("NEWX:" + newValue);
 
             angle.set(newValue);
-//            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWithAngle(centerx.get(), centery.get(), length.get(), angle.get());
-            ArrayList<ArrayList<Double>> our_newx_dots = turnDotsWithAngle(centerx.get(), centery.get(), length.get(), angle.get(), 150, 113.39);
+            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(centerx.get(), centery.get(), length.get(), angle.get());
+//            ArrayList<ArrayList<Double>> our_newx_dots = turnDotsWithAngle(centerx.get(), centery.get(), length.get(), angle.get(), 150, 113.39);
 
 
             canvas.getChildren().remove(hexagon);

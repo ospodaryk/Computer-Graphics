@@ -50,6 +50,10 @@ public class AFController implements Initializable {
     public Spinner Y;
     public Spinner SIZE;
     public Spinner ANGLE;
+    AtomicReference<Double> centerx = new AtomicReference<>();
+    AtomicReference<Double> centery = new AtomicReference<>();
+    AtomicReference<Double> length = new AtomicReference<>();
+    AtomicReference<Double> angle = new AtomicReference<>();
     Timeline timeline = new Timeline();
     Path path = new Path();
     MoveTo corner1 = new MoveTo();
@@ -63,6 +67,252 @@ public class AFController implements Initializable {
     private void backToMain() throws IOException {
         App.setRoot("main");
     }
+
+
+
+
+
+    private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
+
+        System.out.println("======================================");
+
+        ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
+        double tmplength = koef * UNIT;
+        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
+        double tmpcentry = centery * UNIT + CANVAS_SIZE;
+        ArrayList<Double> v1 = new ArrayList<>();
+        v1.add(tmplength + tmpcentrx);
+        v1.add(tmpcentry);
+        ourdots.add(v1);
+
+        ArrayList<Double> v3 = new ArrayList<>();
+        v3.add(tmplength / 2 + tmpcentrx);
+        v3.add((Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry);
+        ourdots.add(v3);
+
+        ArrayList<Double> v4 = new ArrayList<>();
+        v4.add(Math.abs(tmplength / 2 - tmpcentrx));
+        v4.add((Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry);
+        ourdots.add(v4);
+
+        ArrayList<Double> v2 = new ArrayList<>();
+        v2.add(Math.abs(tmplength - tmpcentrx));
+        v2.add(tmpcentry);
+        ourdots.add(v2);
+
+        ArrayList<Double> v5 = new ArrayList<>();
+        v5.add(Math.abs(tmplength / 2 - tmpcentrx));
+        v5.add(Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
+        ourdots.add(v5);
+
+        ArrayList<Double> v6 = new ArrayList<>();
+        v6.add(Math.abs(tmplength / 2 + tmpcentrx));
+        v6.add(Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
+        ourdots.add(v6);
+        ourdots.forEach(System.out::println);
+        System.out.println("======================================");
+
+        return ourdots;
+    }
+
+    public static double findx(double X, double Y, double angle) {
+
+        double x = ((X - 300) * (Math.cos(Math.toRadians(angle))) + (Y - 200) * (Math.sin(Math.toRadians(angle)))) + 300;
+        return x;
+    }
+
+    public static double findy(double X, double Y, double angle) {
+
+        double y = (-1 * (X - 300) * (Math.sin(Math.toRadians(angle))) + (Y - 200) * (Math.cos(Math.toRadians(angle)))) + 200;
+        return y;
+    }
+
+    private static ArrayList<ArrayList<Double>> turnDotsWithAngle(double centerx, double centery, double koef, double angle, double vx, double vy) {
+        System.out.println("======================================");
+
+        System.out.println("FLIPFLAPCHANGE");
+
+        ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
+        double tmplength = koef * UNIT;
+        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
+        double tmpcentry = centery * UNIT + CANVAS_SIZE;
+        double x = 0;
+        double y = 0;
+        double X = 0;
+        double Y = 0;
+        ArrayList<Double> v1 = new ArrayList<>();
+        X = (tmplength + tmpcentrx);
+        Y = (tmpcentry);
+        x = findx(X, Y, angle);
+        y = findy(X, Y, angle);
+        v1.add(x);
+        v1.add(y);
+        ourdots.add(v1);
+
+        ArrayList<Double> v3 = new ArrayList<>();
+        X = (tmplength / 2 + tmpcentrx);
+        Y = ((Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry);
+        x = findx(X, Y, angle);
+        y = findy(X, Y, angle);
+        v3.add(x);
+        v3.add(y);
+        ourdots.add(v3);
+
+        ArrayList<Double> v4 = new ArrayList<>();
+        X = Math.abs(tmplength / 2 - tmpcentrx);
+        Y = (Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry;
+        ;
+        x = findx(X, Y, angle);
+        y = findy(X, Y, angle);
+        v4.add(x);
+        v4.add(y);
+        ourdots.add(v4);
+
+        ArrayList<Double> v2 = new ArrayList<>();
+        X = (Math.abs(tmplength - tmpcentrx));
+        Y = (tmpcentry);
+        x = findx(X, Y, angle);
+        y = findy(X, Y, angle);
+        v2.add(x);
+        v2.add(y);
+        ourdots.add(v2);
+
+        ArrayList<Double> v5 = new ArrayList<>();
+        X = (Math.abs(tmplength / 2 - tmpcentrx));
+        Y = (Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
+        x = findx(X, Y, angle);
+        y = findy(X, Y, angle);
+        v5.add(x);
+        v5.add(y);
+        ourdots.add(v5);
+
+        ArrayList<Double> v6 = new ArrayList<>();
+        X = (Math.abs(tmplength / 2 + tmpcentrx));
+        Y = (Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
+        x = findx(X, Y, angle);
+        y = findy(X, Y, angle);
+        v6.add(x);
+        v6.add(y);
+        ourdots.add(v6);
+        ourdots.forEach(System.out::println);
+        System.out.println("======================================");
+
+        return ourdots;
+
+    }
+
+    public static double fx_TurnAroundCenter(double X, double Y, double angle, double centerx, double centery) {
+
+        double x = ((X) * (Math.cos(Math.toRadians(angle))) + (Y) * (Math.sin(Math.toRadians(angle)))) + CANVAS_SIZE + centerx * UNIT;
+        return x;
+    }
+
+    public static double fy_TurnAroundCenter(double X, double Y, double angle, double centerx, double centery) {
+
+        double y = (-1 * (X) * (Math.sin(Math.toRadians(angle))) + (Y) * (Math.cos(Math.toRadians(angle)))) + CANVAS_SIZE + centery * UNIT;
+        return y;
+    }
+
+    private static ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double centerx, double centery, double koef, double angle) {
+        System.out.println("======================================");
+
+        System.out.println("FLIPFLAPCHANGE");
+
+        ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
+        double tmplength = koef * UNIT;
+        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
+        double tmpcentry = centery * UNIT + CANVAS_SIZE;
+        double x = 0;
+        double y = 0;
+        double X = 0;
+        double Y = 0;
+        ArrayList<Double> v1 = new ArrayList<>();
+        X = (tmplength);
+        Y = (0);
+        x = fx_TurnAroundCenter(X, Y, angle, centerx, centery);
+        y = fy_TurnAroundCenter(X, Y, angle, centerx, centery);
+        v1.add(x);
+        v1.add(y);
+        ourdots.add(v1);
+
+        ArrayList<Double> v3 = new ArrayList<>();
+        X = (tmplength / 2);
+        Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
+        x = fx_TurnAroundCenter(X, Y, angle, centerx, centery);
+        y = fy_TurnAroundCenter(X, Y, angle, centerx, centery);
+        v3.add(x);
+        v3.add(y);
+        ourdots.add(v3);
+
+        ArrayList<Double> v4 = new ArrayList<>();
+        X = ((-tmplength / 2));
+        Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
+        x = fx_TurnAroundCenter(X, Y, angle, centerx, centery);
+        y = fy_TurnAroundCenter(X, Y, angle, centerx, centery);
+        v4.add(x);
+        v4.add(y);
+
+        ourdots.add(v4);
+
+        ArrayList<Double> v2 = new ArrayList<>();
+        X = ((-tmplength));
+        Y = (0);
+        x = fx_TurnAroundCenter(X, Y, angle, centerx, centery);
+        y = fy_TurnAroundCenter(X, Y, angle, centerx, centery);
+        v2.add(x);
+        v2.add(y);
+        ourdots.add(v2);
+
+        ArrayList<Double> v5 = new ArrayList<>();
+        X = ((-tmplength / 2));
+        Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
+        x = fx_TurnAroundCenter(X, Y, angle, centerx, centery);
+        y = fy_TurnAroundCenter(X, Y, angle, centerx, centery);
+        v5.add(x);
+        v5.add(y);
+        ourdots.add(v5);
+
+        ArrayList<Double> v6 = new ArrayList<>();
+        X = ((tmplength / 2));
+        Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
+        x = fx_TurnAroundCenter(X, Y, angle, centerx, centery);
+        y = fy_TurnAroundCenter(X, Y, angle, centerx, centery);
+        v6.add(x);
+        v6.add(y);
+        ourdots.add(v6);
+        ourdots.forEach(System.out::println);
+        System.out.println("======================================");
+
+        return ourdots;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @FXML
     private void saveCanvasToFile() {
@@ -275,234 +525,7 @@ public class AFController implements Initializable {
         );
         canvas.getChildren().add(hexagon);
 
-        }
-
-
-
-
-
-    private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
-
-        System.out.println("======================================");
-
-        ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * UNIT;
-        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
-        double tmpcentry = centery * UNIT + CANVAS_SIZE;
-        ArrayList<Double> v1 = new ArrayList<>();
-        v1.add(tmplength + tmpcentrx);
-        v1.add(tmpcentry);
-        ourdots.add(v1);
-
-        ArrayList<Double> v3 = new ArrayList<>();
-        v3.add(tmplength / 2 + tmpcentrx);
-        v3.add((Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry);
-        ourdots.add(v3);
-
-        ArrayList<Double> v4 = new ArrayList<>();
-        v4.add(Math.abs(tmplength / 2 - tmpcentrx));
-        v4.add((Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry);
-        ourdots.add(v4);
-
-        ArrayList<Double> v2 = new ArrayList<>();
-        v2.add(Math.abs(tmplength - tmpcentrx));
-        v2.add(tmpcentry);
-        ourdots.add(v2);
-
-        ArrayList<Double> v5 = new ArrayList<>();
-        v5.add(Math.abs(tmplength / 2 - tmpcentrx));
-        v5.add(Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
-        ourdots.add(v5);
-
-        ArrayList<Double> v6 = new ArrayList<>();
-        v6.add(Math.abs(tmplength / 2 + tmpcentrx));
-        v6.add(Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
-        ourdots.add(v6);
-        ourdots.forEach(System.out::println);
-        System.out.println("======================================");
-
-        return ourdots;
     }
-
-    public static double findx(double X, double Y, double angle) {
-
-        double x = ((X - 300) * (Math.cos(Math.toRadians(angle))) + (Y - 200) * (Math.sin(Math.toRadians(angle)))) + 300;
-        return x;
-    }
-
-    public static double findy(double X, double Y, double angle) {
-
-        double y = (-1 * (X - 300) * (Math.sin(Math.toRadians(angle))) + (Y - 200) * (Math.cos(Math.toRadians(angle)))) + 200;
-        return y;
-    }
-
-    private static ArrayList<ArrayList<Double>> turnDotsWithAngle(double centerx, double centery, double koef, double angle, double vx, double vy) {
-        System.out.println("======================================");
-
-        System.out.println("FLIPFLAPCHANGE");
-
-        ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * UNIT;
-        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
-        double tmpcentry = centery * UNIT + CANVAS_SIZE;
-        double x = 0;
-        double y = 0;
-        double X = 0;
-        double Y = 0;
-        ArrayList<Double> v1 = new ArrayList<>();
-        X = (tmplength + tmpcentrx);
-        Y = (tmpcentry);
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
-        v1.add(x);
-        v1.add(y);
-        ourdots.add(v1);
-
-        ArrayList<Double> v3 = new ArrayList<>();
-        X = (tmplength / 2 + tmpcentrx);
-        Y = ((Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry);
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
-        v3.add(x);
-        v3.add(y);
-        ourdots.add(v3);
-
-        ArrayList<Double> v4 = new ArrayList<>();
-        X = Math.abs(tmplength / 2 - tmpcentrx);
-        Y = (Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry;
-        ;
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
-        v4.add(x);
-        v4.add(y);
-        ourdots.add(v4);
-
-        ArrayList<Double> v2 = new ArrayList<>();
-        X = (Math.abs(tmplength - tmpcentrx));
-        Y = (tmpcentry);
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
-        v2.add(x);
-        v2.add(y);
-        ourdots.add(v2);
-
-        ArrayList<Double> v5 = new ArrayList<>();
-        X = (Math.abs(tmplength / 2 - tmpcentrx));
-        Y = (Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
-        v5.add(x);
-        v5.add(y);
-        ourdots.add(v5);
-
-        ArrayList<Double> v6 = new ArrayList<>();
-        X = (Math.abs(tmplength / 2 + tmpcentrx));
-        Y = (Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
-        v6.add(x);
-        v6.add(y);
-        ourdots.add(v6);
-        ourdots.forEach(System.out::println);
-        System.out.println("======================================");
-
-        return ourdots;
-
-    }
-
-    public static double findx(double X, double Y, double angle, double centerx, double centery) {
-
-        double x = ((X) * (Math.cos(Math.toRadians(angle))) + (Y) * (Math.sin(Math.toRadians(angle)))) + CANVAS_SIZE + centerx * UNIT;
-        return x;
-    }
-
-    public static double findy(double X, double Y, double angle, double centerx, double centery) {
-
-        double y = (-1 * (X) * (Math.sin(Math.toRadians(angle))) + (Y) * (Math.cos(Math.toRadians(angle)))) + CANVAS_SIZE + centery * UNIT;
-        return y;
-    }
-
-    private static ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double centerx, double centery, double koef, double angle) {
-        System.out.println("======================================");
-
-        System.out.println("FLIPFLAPCHANGE");
-
-        ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * UNIT;
-        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
-        double tmpcentry = centery * UNIT + CANVAS_SIZE;
-        double x = 0;
-        double y = 0;
-        double X = 0;
-        double Y = 0;
-        ArrayList<Double> v1 = new ArrayList<>();
-        X = (tmplength);
-        Y = (0);
-        x = findx(X, Y, angle, centerx, centery);
-        y = findy(X, Y, angle, centerx, centery);
-        v1.add(x);
-        v1.add(y);
-        ourdots.add(v1);
-
-        ArrayList<Double> v3 = new ArrayList<>();
-        X = (tmplength / 2);
-        Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        x = findx(X, Y, angle, centerx, centery);
-        y = findy(X, Y, angle, centerx, centery);
-        v3.add(x);
-        v3.add(y);
-        ourdots.add(v3);
-
-        ArrayList<Double> v4 = new ArrayList<>();
-        X = ((-tmplength / 2));
-        Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        x = findx(X, Y, angle, centerx, centery);
-        y = findy(X, Y, angle, centerx, centery);
-        v4.add(x);
-        v4.add(y);
-
-        ourdots.add(v4);
-
-        ArrayList<Double> v2 = new ArrayList<>();
-        X = ((-tmplength));
-        Y = (0);
-        x = findx(X, Y, angle, centerx, centery);
-        y = findy(X, Y, angle, centerx, centery);
-        v2.add(x);
-        v2.add(y);
-        ourdots.add(v2);
-
-        ArrayList<Double> v5 = new ArrayList<>();
-        X = ((-tmplength / 2));
-        Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        x = findx(X, Y, angle, centerx, centery);
-        y = findy(X, Y, angle, centerx, centery);
-        v5.add(x);
-        v5.add(y);
-        ourdots.add(v5);
-
-        ArrayList<Double> v6 = new ArrayList<>();
-        X = ((tmplength / 2));
-        Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        x = findx(X, Y, angle, centerx, centery);
-        y = findy(X, Y, angle, centerx, centery);
-        v6.add(x);
-        v6.add(y);
-        ourdots.add(v6);
-        ourdots.forEach(System.out::println);
-        System.out.println("======================================");
-
-        return ourdots;
-    }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -525,10 +548,10 @@ public class AFController implements Initializable {
         SIZE.setValueFactory(valueFactorySIZE);
         ANGLE.setValueFactory(valueFactoryANGLE);
 
-        AtomicReference<Double> centerx = new AtomicReference<>((double) X.getValue());
-        AtomicReference<Double> centery = new AtomicReference<>((double) Y.getValue());
-        AtomicReference<Double> length = new AtomicReference<>((double) SIZE.getValue());
-        AtomicReference<Double> angle = new AtomicReference<>((double) ANGLE.getValue());
+        centerx = new AtomicReference<>((double) X.getValue());
+        centery = new AtomicReference<>((double) Y.getValue());
+        length = new AtomicReference<>((double) SIZE.getValue());
+   angle = new AtomicReference<>((double) ANGLE.getValue());
 //        long cx=Math.round(centerx.get()+200);
 //        long cy=Math.round(centerx.get()+200);
         Double cx = (centerx.get() + CANVAS_SIZE);
@@ -639,3 +662,6 @@ public class AFController implements Initializable {
     }
 
 }
+
+
+

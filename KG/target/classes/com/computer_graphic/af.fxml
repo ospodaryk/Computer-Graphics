@@ -99,8 +99,27 @@
 
 
 
+    <Button fx:id="btnbuild" layoutX="970.0" layoutY="550.0" mnemonicParsing="false" onAction="#build"
+            prefHeight="40.0" prefWidth="245.0" style="-fx-background-color: #FEC33B;" text="Побудувати">
+        <font>
+            <Font name="Times New Roman" size="24.0"/>
+        </font>
+    </Button>
+
+    <Text layoutX="970.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вершина X" textAlignment="RIGHT" wrappingWidth="99.43896484374997">
+        <font>
+            <Font name="Times New Roman BOLD" size="24.0"/>
+        </font>
+    </Text>
+    <Spinner fx:id="CY" editable="true" layoutX="1100.0" layoutY="490.0" prefHeight="30.0" prefWidth="100.0"  amountToStepBy="2"/>
 
 
+    <Text layoutX="970.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вершина Y" textAlignment="RIGHT" wrappingWidth="99.0">
+        <font>
+            <Font name="Times New Roman BOLD" size="24.0"/>
+        </font>
+    </Text>
+    <Spinner fx:id="CX" editable="true" layoutX="1100.0" layoutY="440.0" prefHeight="30.0" prefWidth="100.0" amountToStepBy="2" />
 
 
 

@@ -47,10 +47,14 @@ public class AFController implements Initializable {
     private static final int CANVAS_HEIGHT = 400;
     public Pane canvas;
     public Polygon hexagon;
+    public Spinner CX;
+    public Spinner CY;
     public Spinner X;
     public Spinner Y;
     public Spinner SIZE;
     public Spinner ANGLE;
+    AtomicReference<Double> cx = new AtomicReference<>();
+    AtomicReference<Double> cy = new AtomicReference<>();
     AtomicReference<Double> centerx = new AtomicReference<>();
     AtomicReference<Double> centery = new AtomicReference<>();
     AtomicReference<Double> length = new AtomicReference<>();
@@ -69,6 +73,55 @@ public class AFController implements Initializable {
         App.setRoot("main");
     }
 
+    @FXML
+    private void build() throws InterruptedException {
+        cx = new AtomicReference<>((double) CX.getValue());
+        cy = new AtomicReference<>((double) CY.getValue());
+//
+        ArrayList<ArrayList<Double>> newDots =  findDotsWithExactHead();
+        setHexagon(newDots);
+//        ArrayList<ArrayList<Double>> ourdotsXY = findDotsWhenTurnAroundCenter(20);
+//        setHexagon(ourdotsXY);
+
+    }
+
+    public ArrayList<ArrayList<Double>> findDotsWithExactHead() {
+        double tmpx=0*UNIT+CANVAS_SIZE;
+        double tmpy=length.get()*UNIT+CANVAS_SIZE;
+
+        ArrayList<ArrayList<Double>> ourdotsOO = findDotsWhenTurnAroundCenter(0);
+
+        Double min = len(tmpx, tmpy, ourdotsOO.get(0).get(0), ourdotsOO.get(0).get(1));
+
+        Double x2 = ourdotsOO.get(0).get(0);
+        Double y2 = ourdotsOO.get(0).get(1);
+        for (int i = 0; i < ourdotsOO.size(); i++) {
+            Double tmp=min;
+            min = len(tmpx, tmpy, ourdotsOO.get(i).get(0), ourdotsOO.get(i).get(1));
+              if(tmp<min) {
+                  min=tmp;
+                  x2 = ourdotsOO.get(i).get(0);
+                  y2 = ourdotsOO.get(i).get(1);
+              }
+
+        }
+        double tmplength = length.get() * UNIT_LENGTH;
+        double tmpvalue=(Math.abs((tmpx-CANVAS_SIZE) * (x2-CANVAS_SIZE)) + (Math.abs(tmpy-CANVAS_SIZE) * Math.abs(y2-CANVAS_SIZE))) / Math.pow(tmplength, 2);
+        if(tmpvalue>1){tmpvalue--;}
+        double alpa = (Math.acos(tmpvalue));
+        System.out.println(alpa);
+        ArrayList<ArrayList<Double>> ourdotsXY = findDotsWhenTurnAroundCenter(Math.toDegrees(alpa));
+
+
+        return ourdotsXY;
+
+    }
+
+    public Double len(Double x1, Double x2, Double y1, Double y2) {
+
+
+        return Math.pow((Math.pow(x2 - x1, 2) + (Math.pow(y2 - y1, 2))), 0.5);
+    }
 
     private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
 
@@ -317,7 +370,6 @@ public class AFController implements Initializable {
         corner6.yProperty().set(hexagon.getPoints().get(11));
 
 
-
         path = new Path(corner1, corner2, corner3, corner4, corner5, corner6, new ClosePath());
         canvas.getChildren().add(path);
         int startangle = 0;
@@ -498,11 +550,15 @@ public class AFController implements Initializable {
         hexagon.setStroke(new Color(0, 0, 0, 1));
         hexagon.setStrokeWidth(3);
 
+        SpinnerValueFactory<Double> valueFactoryCX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
+        SpinnerValueFactory<Double> valueFactoryCY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 20, 10, 0.1);
         SpinnerValueFactory<Double> valueFactoryANGLE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 360, 0, 1);
 
+        CX.setValueFactory(valueFactoryCX);
+        CY.setValueFactory(valueFactoryCY);
         X.setValueFactory(valueFactoryX);
         Y.setValueFactory(valueFactoryY);
         SIZE.setValueFactory(valueFactorySIZE);
@@ -515,7 +571,6 @@ public class AFController implements Initializable {
 
 
         ArrayList<ArrayList<Double>> ourdots = findDotsWhenTurnAroundCenter(angle.get());
-//        ArrayList<ArrayList<Double>> ourdots = findDots(centerx.get(), centery.get(), length.get());
 
 
         hexagon.getPoints().addAll(ourdots.get(0).get(0), ourdots.get(0).get(1),
@@ -562,6 +617,16 @@ public class AFController implements Initializable {
             setHexagon(our_newx_dots);
 
         });
+
+    }
+
+    public void formulaCorner(int x, int y) {
+
+
+    }
+
+    public void findHEcagonByOneCorner(int x, int y) {
+
 
     }
 

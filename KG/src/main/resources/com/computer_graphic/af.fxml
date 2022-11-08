@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="450" maxWidth="720" minHeight="450" minWidth="720" prefHeight="450.0" prefWidth="720.0"
+<AnchorPane maxHeight="910" maxWidth="1280" minHeight="910" minWidth="1280" prefHeight="910.0" prefWidth="1280.0"
             styleClass="af" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.computer_graphic.controllers.AFController">    <children>
 

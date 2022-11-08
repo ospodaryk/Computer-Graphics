@@ -36,14 +36,14 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Flow;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static javax.swing.text.html.HTML.Tag.HEAD;
-import static javax.swing.text.html.HTML.Tag.P;
+import static javax.swing.text.html.HTML.Tag.*;
 
 public class AFController implements Initializable {
+    private static Integer UNIT = 100;
+    private static Integer CANVAS_SIZE = 250;
 
     private static final int CANVAS_WIDTH = 400;
     private static final int CANVAS_HEIGHT = 400;
-    private static Integer unit = 100;
     public Pane canvas;
     public Polygon hexagon;
     public Spinner X;
@@ -277,14 +277,18 @@ public class AFController implements Initializable {
 
         }
 
+
+
+
+
     private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
 
         System.out.println("======================================");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * unit;
-        double tmpcentrx = centerx * unit + 200;
-        double tmpcentry = centery * unit + 200;
+        double tmplength = koef * UNIT;
+        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
+        double tmpcentry = centery * UNIT + CANVAS_SIZE;
         ArrayList<Double> v1 = new ArrayList<>();
         v1.add(tmplength + tmpcentrx);
         v1.add(tmpcentry);
@@ -338,9 +342,9 @@ public class AFController implements Initializable {
         System.out.println("FLIPFLAPCHANGE");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * unit;
-        double tmpcentrx = centerx * unit + 200;
-        double tmpcentry = centery * unit + 200;
+        double tmplength = koef * UNIT;
+        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
+        double tmpcentry = centery * UNIT + CANVAS_SIZE;
         double x = 0;
         double y = 0;
         double X = 0;
@@ -408,13 +412,13 @@ public class AFController implements Initializable {
 
     public static double findx(double X, double Y, double angle, double centerx, double centery) {
 
-        double x = ((X) * (Math.cos(Math.toRadians(angle))) + (Y) * (Math.sin(Math.toRadians(angle)))) + 200 + centerx * unit;
+        double x = ((X) * (Math.cos(Math.toRadians(angle))) + (Y) * (Math.sin(Math.toRadians(angle)))) + CANVAS_SIZE + centerx * UNIT;
         return x;
     }
 
     public static double findy(double X, double Y, double angle, double centerx, double centery) {
 
-        double y = (-1 * (X) * (Math.sin(Math.toRadians(angle))) + (Y) * (Math.cos(Math.toRadians(angle)))) + 200 + centery * unit;
+        double y = (-1 * (X) * (Math.sin(Math.toRadians(angle))) + (Y) * (Math.cos(Math.toRadians(angle)))) + CANVAS_SIZE + centery * UNIT;
         return y;
     }
 
@@ -424,9 +428,9 @@ public class AFController implements Initializable {
         System.out.println("FLIPFLAPCHANGE");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * unit;
-        double tmpcentrx = centerx * unit;
-        double tmpcentry = centery * unit;
+        double tmplength = koef * UNIT;
+        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
+        double tmpcentry = centery * UNIT + CANVAS_SIZE;
         double x = 0;
         double y = 0;
         double X = 0;
@@ -527,8 +531,8 @@ public class AFController implements Initializable {
         AtomicReference<Double> angle = new AtomicReference<>((double) ANGLE.getValue());
 //        long cx=Math.round(centerx.get()+200);
 //        long cy=Math.round(centerx.get()+200);
-        Double cx = (centerx.get() + 200);
-        Double cy = (centerx.get() + 200);
+        Double cx = (centerx.get() + CANVAS_SIZE);
+        Double cy = (centerx.get() + CANVAS_SIZE);
         var k = new Polygon();
         k.getPoints().addAll(cx, cy);
         canvas.getChildren().add(k);

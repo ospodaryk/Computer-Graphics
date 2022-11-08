@@ -87,10 +87,12 @@
             <Line endX="250" layoutX="250.0" layoutY="250.0" startX="-250.0" />
             <Line  endY="250" layoutX="250.0" layoutY="250.0" startY="-250.0" />
          </children>
-
-
       </Pane>
-
+    <Text layoutX="444.5" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-10 -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9  10" textAlignment="CENTER" wrappingWidth="500">
+        <font>
+            <Font name="Times New Roman BOLD" size="16.0"/>
+        </font>
+    </Text>
 
 
 

@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static javax.swing.text.html.HTML.Tag.*;
 
 public class AFController implements Initializable {
-    private static Integer UNIT = 100;
+    private static Integer UNIT = 20;
     private static Integer CANVAS_SIZE = 250;
 
     private static final int CANVAS_WIDTH = 400;
@@ -67,9 +67,6 @@ public class AFController implements Initializable {
     private void backToMain() throws IOException {
         App.setRoot("main");
     }
-
-
-
 
 
     private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
@@ -213,9 +210,9 @@ public class AFController implements Initializable {
         return y;
     }
 
-    private  ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double angle) {
+    private ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double angle) {
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = length.get() * UNIT;
+        double tmplength = length.get() * UNIT/2;
         double tmpcentrx = centerx.get() * UNIT + CANVAS_SIZE;
         double tmpcentry = centery.get() * UNIT + CANVAS_SIZE;
         double x = 0;
@@ -281,33 +278,6 @@ public class AFController implements Initializable {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @FXML
     private void saveCanvasToFile() {
         FileChooser fileChooser = new FileChooser();
@@ -346,22 +316,21 @@ public class AFController implements Initializable {
 //        canvas.getChildren().add(hexagon);
 
 
-
         path = new Path(corner1, corner2, corner3, corner4, corner5, corner6, new ClosePath());
         canvas.getChildren().add(path);
-        int startangle=0;
-        int step=10;
-        ArrayList<ArrayList<Double>> our_newx_dot2 = turnDotsWithAngle(0, 0, 1, startangle+2*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot3 = turnDotsWithAngle(0, 0, 1, startangle+4*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot4 = turnDotsWithAngle(0, 0, 1, startangle+6*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot5 = turnDotsWithAngle(0, 0, 1, startangle+8*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot6 = turnDotsWithAngle(0, 0, 1, startangle+10*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot7 = turnDotsWithAngle(0, 0, 1, startangle+12*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot8 = turnDotsWithAngle(0, 0, 1, startangle+14*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot9 = turnDotsWithAngle(0, 0, 1, startangle+16*step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot10 = turnDotsWithAngle(0, 0, 1, startangle+18*step, 150, 113.39);
+        int startangle = 0;
+        int step = 10;
+        ArrayList<ArrayList<Double>> our_newx_dot2 = turnDotsWithAngle(0, 0, 1, startangle + 2 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot3 = turnDotsWithAngle(0, 0, 1, startangle + 4 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot4 = turnDotsWithAngle(0, 0, 1, startangle + 6 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot5 = turnDotsWithAngle(0, 0, 1, startangle + 8 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot6 = turnDotsWithAngle(0, 0, 1, startangle + 10 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot7 = turnDotsWithAngle(0, 0, 1, startangle + 12 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot8 = turnDotsWithAngle(0, 0, 1, startangle + 14 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot9 = turnDotsWithAngle(0, 0, 1, startangle + 16 * step, 150, 113.39);
+        ArrayList<ArrayList<Double>> our_newx_dot10 = turnDotsWithAngle(0, 0, 1, startangle + 18 * step, 150, 113.39);
 
-        int seconds=1;
+        int seconds = 1;
         timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(corner1.xProperty(), our_newx_dots.get(0).get(0)),
@@ -389,7 +358,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.yProperty(), our_newx_dot2.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot2.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot2.get(5).get(1))),
-                new KeyFrame(Duration.seconds(seconds*2),
+                new KeyFrame(Duration.seconds(seconds * 2),
                         new KeyValue(corner1.xProperty(), our_newx_dot3.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot3.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot3.get(1).get(0)),
@@ -402,7 +371,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.yProperty(), our_newx_dot3.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot3.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot3.get(5).get(1))),
-                new KeyFrame(Duration.seconds(seconds*3),
+                new KeyFrame(Duration.seconds(seconds * 3),
                         new KeyValue(corner1.xProperty(), our_newx_dot4.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot4.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot4.get(1).get(0)),
@@ -415,7 +384,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.yProperty(), our_newx_dot4.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot4.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot4.get(5).get(1))),
-                new KeyFrame(Duration.seconds(seconds*4),
+                new KeyFrame(Duration.seconds(seconds * 4),
                         new KeyValue(corner1.xProperty(), our_newx_dot5.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot5.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot5.get(1).get(0)),
@@ -428,7 +397,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.yProperty(), our_newx_dot5.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot5.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot5.get(5).get(1))),
-                new KeyFrame(Duration.seconds(seconds*5),
+                new KeyFrame(Duration.seconds(seconds * 5),
                         new KeyValue(corner1.xProperty(), our_newx_dot6.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot6.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot6.get(1).get(0)),
@@ -441,7 +410,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.yProperty(), our_newx_dot6.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot6.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot6.get(5).get(1))),
-                new KeyFrame(Duration.seconds(seconds*6),
+                new KeyFrame(Duration.seconds(seconds * 6),
                         new KeyValue(corner1.xProperty(), our_newx_dot7.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot7.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot7.get(1).get(0)),
@@ -454,7 +423,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.yProperty(), our_newx_dot7.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot7.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot7.get(5).get(1))),
-                new KeyFrame(Duration.seconds(seconds*7),
+                new KeyFrame(Duration.seconds(seconds * 7),
                         new KeyValue(corner1.xProperty(), our_newx_dot8.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot8.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot8.get(1).get(0)),
@@ -468,7 +437,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner6.xProperty(), our_newx_dot8.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot8.get(5).get(1)))
                 ,
-                new KeyFrame(Duration.seconds(seconds*8),
+                new KeyFrame(Duration.seconds(seconds * 8),
                         new KeyValue(corner1.xProperty(), our_newx_dot9.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot9.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot9.get(1).get(0)),
@@ -481,7 +450,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.yProperty(), our_newx_dot9.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot9.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot9.get(5).get(1))),
-                new KeyFrame(Duration.seconds(seconds*9),
+                new KeyFrame(Duration.seconds(seconds * 9),
                         new KeyValue(corner1.xProperty(), our_newx_dot10.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dot10.get(0).get(1)),
                         new KeyValue(corner2.xProperty(), our_newx_dot10.get(1).get(0)),
@@ -496,8 +465,6 @@ public class AFController implements Initializable {
                         new KeyValue(corner6.yProperty(), our_newx_dot10.get(5).get(1)))
 
 
-
-
         );
         timeline.setAutoReverse(true);
         timeline.play();
@@ -510,19 +477,16 @@ public class AFController implements Initializable {
         timeline.stop();
         hexagon.getPoints().removeAll();
         hexagon.getPoints().clear();
-        hexagon.getPoints().addAll(corner1.xProperty().get(),corner1.yProperty().get(),
-                corner2.xProperty().get(),corner2.yProperty().get(),
-                corner3.xProperty().get(),corner3.yProperty().get(),
-                corner4.xProperty().get(),corner4.yProperty().get(),
-                corner5.xProperty().get(),corner5.yProperty().get(),
-                corner6.xProperty().get(),corner6.yProperty().get()
+        hexagon.getPoints().addAll(corner1.xProperty().get(), corner1.yProperty().get(),
+                corner2.xProperty().get(), corner2.yProperty().get(),
+                corner3.xProperty().get(), corner3.yProperty().get(),
+                corner4.xProperty().get(), corner4.yProperty().get(),
+                corner5.xProperty().get(), corner5.yProperty().get(),
+                corner6.xProperty().get(), corner6.yProperty().get()
         );
         canvas.getChildren().add(hexagon);
 
     }
-
-
-
 
 
     @Override
@@ -532,9 +496,9 @@ public class AFController implements Initializable {
         hexagon.setStroke(new Color(0, 0, 0, 1));
         hexagon.setStrokeWidth(3);
 
-        SpinnerValueFactory<Double> valueFactoryX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-4, 4, 0, 0.1);
-        SpinnerValueFactory<Double> valueFactoryY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-4, 4, 0, 0.1);
-        SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 2, 1, 0.1);
+        SpinnerValueFactory<Double> valueFactoryX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
+        SpinnerValueFactory<Double> valueFactoryY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
+        SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 20, 10, 0.1);
         SpinnerValueFactory<Double> valueFactoryANGLE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 360, 0, 1);
 
         X.setValueFactory(valueFactoryX);
@@ -545,21 +509,10 @@ public class AFController implements Initializable {
         centerx = new AtomicReference<>((double) X.getValue());
         centery = new AtomicReference<>((double) Y.getValue());
         length = new AtomicReference<>((double) SIZE.getValue());
-   angle = new AtomicReference<>((double) ANGLE.getValue());
+        angle = new AtomicReference<>((double) ANGLE.getValue());
 
-        Double cx = (centerx.get() + CANVAS_SIZE);
-        Double cy = (centerx.get() + CANVAS_SIZE);
-        var k = new Polygon();
-        k.getPoints().addAll(cx, cy);
-        canvas.getChildren().add(k);
 
-        System.out.println("SIZES");
-        System.out.println(centerx.get());
-        System.out.println(centery.get());
-        System.out.println(length.get());
-        System.out.println("---------------------------------------------");
-
-        ArrayList<ArrayList<Double>> ourdots = findDotsWhenTurnAroundCenter( angle.get());
+        ArrayList<ArrayList<Double>> ourdots = findDotsWhenTurnAroundCenter(angle.get());
 //        ArrayList<ArrayList<Double>> ourdots = findDots(centerx.get(), centery.get(), length.get());
 
 
@@ -595,7 +548,7 @@ public class AFController implements Initializable {
         SIZE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
             System.out.println("NEWX:" + newValue);
             length.set(newValue);
-            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter( angle.get());
+            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(angle.get());
             setHexagon(our_newx_dots);
 
         });
@@ -603,25 +556,27 @@ public class AFController implements Initializable {
         ANGLE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
 
             angle.set(newValue);
-            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter( angle.get());
+            ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(angle.get());
             setHexagon(our_newx_dots);
 
         });
 
     }
-   public void setHexagon(   ArrayList<ArrayList<Double>> our_newx_dots){
-       canvas.getChildren().remove(hexagon);
-       hexagon.getPoints().removeAll();
-       hexagon.getPoints().clear();
-       hexagon.getPoints().addAll(our_newx_dots.get(0).get(0), our_newx_dots.get(0).get(1),
-               our_newx_dots.get(1).get(0), our_newx_dots.get(1).get(1),
-               our_newx_dots.get(2).get(0), our_newx_dots.get(2).get(1),
-               our_newx_dots.get(3).get(0), our_newx_dots.get(3).get(1),
-               our_newx_dots.get(4).get(0), our_newx_dots.get(4).get(1),
-               our_newx_dots.get(5).get(0), our_newx_dots.get(5).get(1)
-       );
-       canvas.getChildren().add(hexagon);
-   }
+
+    public void setHexagon(ArrayList<ArrayList<Double>> our_newx_dots) {
+        canvas.getChildren().remove(hexagon);
+        hexagon.getPoints().removeAll();
+        hexagon.getPoints().clear();
+        hexagon.getPoints().addAll(our_newx_dots.get(0).get(0), our_newx_dots.get(0).get(1),
+                our_newx_dots.get(1).get(0), our_newx_dots.get(1).get(1),
+                our_newx_dots.get(2).get(0), our_newx_dots.get(2).get(1),
+                our_newx_dots.get(3).get(0), our_newx_dots.get(3).get(1),
+                our_newx_dots.get(4).get(0), our_newx_dots.get(4).get(1),
+                our_newx_dots.get(5).get(0), our_newx_dots.get(5).get(1)
+        );
+        canvas.getChildren().add(hexagon);
+    }
+
     Double getValue(Spinner spinner) {
         return Double.parseDouble(String.valueOf(spinner.getValue()));
     }

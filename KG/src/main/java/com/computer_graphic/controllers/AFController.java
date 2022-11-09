@@ -55,6 +55,7 @@ public class AFController implements Initializable {
     private static Integer UNIT = 20;
     private static Integer CANVAS_SIZE = 250;
     private static Integer UNIT_LENGTH = 20;
+
     public Text coordinates;
 
     private static final int CANVAS_WIDTH = 400;
@@ -202,15 +203,17 @@ public class AFController implements Initializable {
         return y;
     }
 
-    private ArrayList<ArrayList<Double>> turnDotsArroundExactHead(double angle, double vx, double vy) {
+    private ArrayList<ArrayList<Double>> turnDotsArroundExactHead(double angle, double vx, double vy,double index) {
         System.out.println("======================================");
 
         System.out.println("FLIPFLAPCHANGE");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = length.get() * UNIT_LENGTH;
-        double tmpcentrx = centerx.get() * UNIT + CANVAS_SIZE;
-        double tmpcentry = centery.get() * UNIT + CANVAS_SIZE;
+        double tmplength = length.get() * UNIT_LENGTH*index;
+
+        double tmpcentrx = centerx.get() * UNIT*index + CANVAS_SIZE;
+        double tmpcentry = centery.get() * UNIT*index + CANVAS_SIZE;
+
         double x = 0;
         double y = 0;
         double X = 0;
@@ -380,10 +383,6 @@ public class AFController implements Initializable {
     private void startAnimation() throws InterruptedException {
 
 
-        int startangle = 0;
-        int step = 10;
-        String valuecentr = "Центру (1,2)";
-
         ArrayList<ArrayList<Double>> our_newx_dots = new ArrayList<>();
         ArrayList<ArrayList<Double>> our_newx_dot2 = new ArrayList<>();
         ArrayList<ArrayList<Double>> our_newx_dot3 = new ArrayList<>();
@@ -394,6 +393,19 @@ public class AFController implements Initializable {
         ArrayList<ArrayList<Double>> our_newx_dot8 = new ArrayList<>();
         ArrayList<ArrayList<Double>> our_newx_dot9 = new ArrayList<>();
         ArrayList<ArrayList<Double>> our_newx_dot10 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot11 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot12 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot13 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot14 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot15 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot16 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot17 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot18 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot19 = new ArrayList<>();
+
+
+
+
 
         String str = TurnComboBox.getValue().toString();
         int start = str.indexOf("(");
@@ -401,46 +413,129 @@ public class AFController implements Initializable {
         String outStr = str.substring(start + 2, end - 1);
         System.out.println(outStr);
         String[] numbers = outStr.split(" , ");
+
+
+        int startangle = 0;
+        int step = 20;
+
         if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
             our_newx_dots = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle +=  step;
             our_newx_dot2 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle += step;
             our_newx_dot3 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle += step;
             our_newx_dot4 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle +=  step;
             our_newx_dot5 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle +=  step;
             our_newx_dot6 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle += step;
             our_newx_dot7 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle += step;
             our_newx_dot8 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle +=step;
             our_newx_dot9 = findDotsWhenTurnAroundCenter(startangle);
-            startangle += 2 * step;
+            startangle += step;
             our_newx_dot10 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot11 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot12 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot13 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot14 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot15 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot16 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot17 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot18 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+            our_newx_dot19 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += step;
+
+
+
         } else {
-            our_newx_dots = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot2 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot3 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot4 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot5 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot6 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot7 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot8 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot9 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
-            startangle += 2 * step;
-            our_newx_dot10 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            double size=1.0;
+            double stepSize=0.03;
+            our_newx_dots = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle +=  step;
+            our_newx_dot2 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle += step;
+            our_newx_dot3 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle += step;
+            our_newx_dot4 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle +=  step;
+            our_newx_dot5 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle +=  step;
+            our_newx_dot6 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle += step;
+            our_newx_dot7 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle += step;
+            our_newx_dot8 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle +=  step;
+            our_newx_dot9 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size+=stepSize;
+
+            startangle += step;
+            our_newx_dot10 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot11 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot12 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot13 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot14 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot15 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot16 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot17 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot18 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
+            size-=stepSize;
+
+            startangle +=  step;
+            our_newx_dot19 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]),size);
         }
 
 
@@ -462,7 +557,7 @@ public class AFController implements Initializable {
         canvas.getChildren().add(path);
 
 
-        int seconds = 1;
+        double seconds = 0.5;
         timeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(corner1.xProperty(), our_newx_dots.get(0).get(0)),
@@ -594,9 +689,128 @@ public class AFController implements Initializable {
                         new KeyValue(corner5.xProperty(), our_newx_dot10.get(4).get(0)),
                         new KeyValue(corner5.yProperty(), our_newx_dot10.get(4).get(1)),
                         new KeyValue(corner6.xProperty(), our_newx_dot10.get(5).get(0)),
-                        new KeyValue(corner6.yProperty(), our_newx_dot10.get(5).get(1)))
+                        new KeyValue(corner6.yProperty(), our_newx_dot10.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds * 10),
+                        new KeyValue(corner1.xProperty(), our_newx_dot11.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot11.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot11.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot11.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot11.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot11.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot11.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot11.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot11.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot11.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot11.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot11.get(5).get(1)))
+                ,
+                new KeyFrame(Duration.seconds(seconds *11),
+                        new KeyValue(corner1.xProperty(), our_newx_dot12.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot12.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot12.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot12.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot12.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot12.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot12.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot12.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot12.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot12.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot12.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot12.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds * 12),
+                        new KeyValue(corner1.xProperty(), our_newx_dot13.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot13.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot13.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot13.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot13.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot13.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot13.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot13.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot13.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot13.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot13.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot13.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds * 13),
+                        new KeyValue(corner1.xProperty(), our_newx_dot14.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot14.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot14.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot14.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot14.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot14.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot14.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot14.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot14.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot14.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot14.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot14.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds * 14),
+                        new KeyValue(corner1.xProperty(), our_newx_dot15.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot15.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot15.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot15.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot15.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot15.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot15.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot15.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot15.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot15.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot15.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot15.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds * 15),
+                        new KeyValue(corner1.xProperty(), our_newx_dot16.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot16.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot16.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot16.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot16.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot16.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot16.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot16.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot16.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot16.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot16.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot16.get(5).get(1)))
+                ,
 
-
+                new KeyFrame(Duration.seconds(seconds * 16),
+                        new KeyValue(corner1.xProperty(), our_newx_dot17.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot17.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot17.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot17.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot17.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot17.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot17.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot17.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot17.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot17.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot17.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot17.get(5).get(1)))
+                ,
+                new KeyFrame(Duration.seconds(seconds * 17),
+                        new KeyValue(corner1.xProperty(), our_newx_dot18.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot18.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot18.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot18.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot18.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot18.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot18.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot18.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot18.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot18.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot18.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot18.get(5).get(1))),
+                new KeyFrame(Duration.seconds(seconds * 18),
+                        new KeyValue(corner1.xProperty(), our_newx_dot19.get(0).get(0)),
+                        new KeyValue(corner1.yProperty(), our_newx_dot19.get(0).get(1)),
+                        new KeyValue(corner2.xProperty(), our_newx_dot19.get(1).get(0)),
+                        new KeyValue(corner2.yProperty(), our_newx_dot19.get(1).get(1)),
+                        new KeyValue(corner3.xProperty(), our_newx_dot19.get(2).get(0)),
+                        new KeyValue(corner3.yProperty(), our_newx_dot19.get(2).get(1)),
+                        new KeyValue(corner4.xProperty(), our_newx_dot19.get(3).get(0)),
+                        new KeyValue(corner4.yProperty(), our_newx_dot19.get(3).get(1)),
+                        new KeyValue(corner5.xProperty(), our_newx_dot19.get(4).get(0)),
+                        new KeyValue(corner5.yProperty(), our_newx_dot19.get(4).get(1)),
+                        new KeyValue(corner6.xProperty(), our_newx_dot19.get(5).get(0)),
+                        new KeyValue(corner6.yProperty(), our_newx_dot19.get(5).get(1)))
         );
         timeline.setAutoReverse(true);
         timeline.play();

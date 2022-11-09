@@ -75,16 +75,60 @@
                     </font>
                 </Text>
                 <Spinner fx:id="ANGLE" editable="true" layoutX="1100.0" layoutY="485.0" prefHeight="26.0" prefWidth="100.0" amountToStepBy="2" />
+                <Text layoutX="985.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="________________________" textAlignment="LEFT" wrappingWidth="499.43896484374997">
+                    <font>
+                        <Font name="Times New Roman" size="20.0"/>
+                    </font>
+                </Text>
+                <Text  layoutX="995.0" layoutY="570.0" text="Одиничний відрізок" textAlignment="LEFT"
+                      wrappingWidth="250">
+                    <font>
+                        <Font name="Times New Roman" size="20.0"/>
+                    </font>
+                </Text>
+
+                <Text fx:id="textSlider" layoutX="1205.0" layoutY="570.0" text="1" wrappingWidth="300">
+                    <font>
+                        <Font name="Times New Roman Bold" size="24.0"/>
+                    </font>
+                </Text>
+                <Slider fx:id="sliderUNIX"
+                        blockIncrement="1.0"
+                        cache="true"
+                        majorTickUnit="1.0"
+                        max="100.0"
+                        min="10.0"
+                        minorTickCount="10"
+                        showTickLabels="true"
+                        showTickMarks="true"
+                        snapToTicks="true"
+                        value="1.0"
+                        layoutX="985.0" layoutY="585.0" prefWidth="250.0"
+                />
+                <Button fx:id="btnDraw" layoutX="550.0" layoutY="650.0" mnemonicParsing="false" onAction="#saveCanvasToFile"
+                        prefHeight="40.0" prefWidth="245.0" styleClass="buttonSave" text="Зберегти">
+                    <font>
+                        <Font name="Times New Roman" size="24.0"/>
+                    </font>
+                </Button>
 
 
 
-                <Button fx:id="btnstart" layoutX="450.0" layoutY="650.0" mnemonicParsing="false" onAction="#startAnimation"
+
+
+
+
+
+
+
+
+                <Button fx:id="btnstart" layoutX="450.0" layoutY="730.0" mnemonicParsing="false" onAction="#startAnimation"
                         prefHeight="40.0" prefWidth="245.0"  styleClass="button2" text="Почати анімацію">
                     <font>
                         <Font name="Times New Roman" size="24.0"/>
                     </font>
                 </Button>
-                <Button fx:id="btnstop" layoutX="700.0" layoutY="650.0" mnemonicParsing="false" onAction="#stopAnimation"
+                <Button fx:id="btnstop" layoutX="700.0" layoutY="730.0" mnemonicParsing="false" onAction="#stopAnimation"
                         prefHeight="40.0" prefWidth="245.0"  styleClass="button2" text="Зупинити анімацію">
                     <font>
                         <Font name="Times New Roman" size="24.0"/>
@@ -92,13 +136,13 @@
                 </Button>
 
 
-                <Text layoutX="460.0" layoutY="750.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Обертати навколо:" textAlignment="LEFT" wrappingWidth="499.40185546875">
+                <Text layoutX="460.0" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Обертати навколо:" textAlignment="LEFT" wrappingWidth="499.40185546875">
                     <font>
                         <Font name="Times New Roman BOLD" size="22.0"/>
                     </font>
                 </Text>
 
-                <ComboBox fx:id="TurnComboBox" layoutX="460.0" layoutY="780.0"  prefHeight="40.0"  prefWidth="450.0"  styleClass="combo-box-popup ">
+                <ComboBox fx:id="TurnComboBox" layoutX="460.0" layoutY="810.0"  prefHeight="40.0"  prefWidth="450.0"  styleClass="combo-box-popup ">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Вершини (1,2)" />
@@ -127,16 +171,8 @@
         </AnchorPane>
 
       <Pane fx:id="canvas" layoutX="450.0" layoutY="132.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: b3b2ae;">
-         <children>
-            <Line endX="250" layoutX="250.0" layoutY="250.0" startX="-250.0" />
-            <Line  endY="250" layoutX="250.0" layoutY="250.0" startY="-250.0" />
-         </children>
+
       </Pane>
-    <Text layoutX="444.5" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-10 -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9  10" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman BOLD" size="16.0"/>
-        </font>
-    </Text>
 
 
 
@@ -149,12 +185,7 @@
             <Font name="Times New Roman" size="24.0"/>
         </font>
     </Button>
-    <Button fx:id="btnDraw" layoutX="985.0" layoutY="565.0" mnemonicParsing="false" onAction="#saveCanvasToFile"
-            prefHeight="40.0" prefWidth="245.0" styleClass="buttonSave" text="Зберегти">
-        <font>
-            <Font name="Times New Roman" size="24.0"/>
-        </font>
-    </Button>
+
 
     <Text layoutX="985.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вершина X" textAlignment="LEFT" wrappingWidth="199.43896484374997">
         <font>
@@ -172,8 +203,7 @@
             <Font name="Times New Roman BOLD"  size="24.0"/>
         </font>
     </Text>
-
-    <Text fx:id="coordinates" layoutX="990.0" layoutY="185.0" text="(0,0)" textAlignment="CENTER"
+    <Text fx:id="coordinates" layoutX="990.0" layoutY="180.0" text="(0,0)" textAlignment="CENTER"
           wrappingWidth="250">
         <font>
             <Font name="Times New Roman" size="20.0"/>
@@ -181,125 +211,8 @@
     </Text>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <Text layoutX="455.5" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="9" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-
-
-
-
-    <Text layoutX="455.5" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-1" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-2" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-3" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-4" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-5" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-6" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-7" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-8" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-9" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
-    <Text layoutX="455.5" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-10" textAlignment="CENTER" wrappingWidth="500">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0"/>
-        </font>
-    </Text>
+<!--    <Slider fx:id="sliderUNIX" layoutX="470.0" layoutY="700.0" min="6.0" minorTickCount="6"-->
+<!--            prefHeight="70.0" prefWidth="450.0" showTickMarks="true"/>-->
 
     </children>
 </AnchorPane>

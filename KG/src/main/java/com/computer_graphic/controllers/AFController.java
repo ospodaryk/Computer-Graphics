@@ -1,65 +1,52 @@
 package com.computer_graphic.controllers;
 
 import com.computer_graphic.App;
-import com.computer_graphic.model.colors.RgbColor;
 import javafx.animation.*;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableListValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.effect.Lighting;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.animation.*;
-import org.w3c.dom.Node;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.Flow;
+import java.util.Timer;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static javax.swing.text.html.HTML.Tag.*;
-
 public class AFController implements Initializable {
-    private static Integer UNIT = 20;
+
+    @FXML
+    public Slider sliderUNIX;
+    private static double UNIT = 25;
+    private static double KOEF = 1;
+
     private static Integer CANVAS_SIZE = 250;
     private static Integer UNIT_LENGTH = 20;
-
+    public Text textSlider;
     public Text coordinates;
 
-    private static final int CANVAS_WIDTH = 400;
-    private static final int CANVAS_HEIGHT = 400;
+    private static final int CANVAS_WIDTH = 500;
+    private static final int CANVAS_HEIGHT = 500;
     public Pane canvas;
     public ComboBox TurnComboBox;
     public static String valueFromComboBox;
@@ -152,7 +139,7 @@ public class AFController implements Initializable {
         double tmpvalue = (Math.abs((tmpx - CANVAS_SIZE) * (x2 - CANVAS_SIZE)) + (Math.abs(tmpy - CANVAS_SIZE) * Math.abs(y2 - CANVAS_SIZE))) / Math.pow(tmplength, 2);
         double alpa = (Math.acos(tmpvalue));
         System.out.println(Math.toDegrees(alpa));
-        ArrayList<ArrayList<Double>> ourdotsXY = findDotsWhenTurnAroundCenter(Math.toDegrees(alpa),1);
+        ArrayList<ArrayList<Double>> ourdotsXY = findDotsWhenTurnAroundCenter(Math.toDegrees(alpa), 1);
         return ourdotsXY;
     }
 
@@ -217,7 +204,7 @@ public class AFController implements Initializable {
 
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = length.get() * UNIT_LENGTH * index;
+        double tmplength = length.get() * UNIT * index;
 
         double tmpcentrx = centerx.get() * UNIT * index + CANVAS_SIZE;
         double tmpcentry = centery.get() * UNIT * index + CANVAS_SIZE;
@@ -295,11 +282,11 @@ public class AFController implements Initializable {
         return y;
     }
 
-    private ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double angle,double index) {
+    private ArrayList<ArrayList<Double>> findDotsWhenTurnAroundCenter(double angle, double index) {
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = length.get() * UNIT_LENGTH*index;
-        double tmpcentrx = centerx.get() * UNIT*index + CANVAS_SIZE;
-        double tmpcentry = centery.get() * UNIT*index + CANVAS_SIZE;
+        double tmplength = length.get() * UNIT_LENGTH * index / KOEF;
+        double tmpcentrx = centerx.get() * UNIT * index + CANVAS_SIZE;
+        double tmpcentry = centery.get() * UNIT * index + CANVAS_SIZE;
         double x = 0;
         double y = 0;
         double X = 0;
@@ -383,7 +370,10 @@ public class AFController implements Initializable {
 
     @FXML
     private void startAnimation() throws InterruptedException {
+        draw();
+    }
 
+    public void draw() {
 
         ArrayList<ArrayList<Double>> our_newx_dots = new ArrayList<>();
         ArrayList<ArrayList<Double>> our_newx_dot2 = new ArrayList<>();
@@ -425,68 +415,68 @@ public class AFController implements Initializable {
             }
 
         }
-        System.out.println("n0 "+numbers[0]+"n1 "+numbers[1]);
+        System.out.println("n0 " + numbers[0] + "n1 " + numbers[1]);
 
-        System.out.println("a "+a+"b "+b);
+        System.out.println("a " + a + "b " + b);
         working_Dots.forEach(System.out::println);
         if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
             double size = 1.0;
             double stepSize = 0.05;
-            our_newx_dots = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dots = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot2 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot2 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot3= findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot3 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot4 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot4 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot5 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot5 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot6 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot6 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot7 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot7 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot8 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot8 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot9 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot9 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot10 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot10 = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
-            our_newx_dot11 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot11 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot12 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot12 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot13 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot13 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot14 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot14 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot15 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot15 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot16 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot16 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot17 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot17 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot18= findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot18 = findDotsWhenTurnAroundCenter(startangle, size);
             size -= stepSize;
             startangle += step;
-            our_newx_dot19 = findDotsWhenTurnAroundCenter(startangle,size);
+            our_newx_dot19 = findDotsWhenTurnAroundCenter(startangle, size);
             startangle += step;
 
 
@@ -586,7 +576,7 @@ public class AFController implements Initializable {
 
 
         double seconds = 0.1;
-        timeline = new Timeline(
+        Timeline timeline2 = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(corner1.xProperty(), our_newx_dots.get(0).get(0)),
                         new KeyValue(corner1.yProperty(), our_newx_dots.get(0).get(1)),
@@ -840,7 +830,9 @@ public class AFController implements Initializable {
                         new KeyValue(corner6.xProperty(), our_newx_dot19.get(5).get(0)),
                         new KeyValue(corner6.yProperty(), our_newx_dot19.get(5).get(1)))
         );
+        timeline = timeline2;
         timeline.setAutoReverse(true);
+        timeline.setCycleCount(10);
         timeline.play();
 
     }
@@ -862,9 +854,9 @@ public class AFController implements Initializable {
 
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        drawLines();
         TurnComboBox.setOnAction(event -> {
             valueFromComboBox = (String) TurnComboBox.getValue();
             System.out.println(valueFromComboBox);
@@ -894,7 +886,7 @@ public class AFController implements Initializable {
         angle = new AtomicReference<>((double) ANGLE.getValue());
 
 
-        working_Dots = findDotsWhenTurnAroundCenter(angle.get(),1);
+        working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
 
 
         hexagon.getPoints().addAll(working_Dots.get(0).get(0), working_Dots.get(0).get(1),
@@ -913,7 +905,7 @@ public class AFController implements Initializable {
 
             System.out.println("NEWX:" + newValue);
             centerx.set(newValue);
-            working_Dots = findDotsWhenTurnAroundCenter(angle.get(),1);
+            working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
             setHexagon(working_Dots);
             setComboBox(working_Dots);
 
@@ -922,7 +914,7 @@ public class AFController implements Initializable {
         Y.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
             System.out.println("NEWX:" + newValue);
             centery.set(newValue);
-            working_Dots = findDotsWhenTurnAroundCenter(angle.get(),1);
+            working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
             setComboBox(working_Dots);
 
             setHexagon(working_Dots);
@@ -934,7 +926,7 @@ public class AFController implements Initializable {
             System.out.println("NEWX:" + newValue);
 
             length.set(newValue);
-            working_Dots = findDotsWhenTurnAroundCenter(angle.get(),1);
+            working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
             setComboBox(working_Dots);
             setHexagon(working_Dots);
 
@@ -961,11 +953,9 @@ public class AFController implements Initializable {
             }
 
 
-
-
             String tmpp = TurnComboBox.getValue().toString();
             if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
-                working_Dots = findDotsWhenTurnAroundCenter(angle.get(),1);
+                working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
             } else {
                 working_Dots = turnDotsArroundExactHead(angle.get(), working_Dots.get(i_index).get(0), working_Dots.get(i_index).get(1), 1);
             }
@@ -973,6 +963,61 @@ public class AFController implements Initializable {
             TurnComboBox.setValue(tmpp);
             setHexagon(working_Dots);
 
+        });
+        sliderUNIX.setBlockIncrement(1);
+        sliderUNIX.setMax(4);
+        sliderUNIX.setMin(1);
+        sliderUNIX.setValue(1);
+        sliderUNIX.setMajorTickUnit(1);
+        sliderUNIX.setMinorTickCount(1);
+        sliderUNIX.valueProperty().addListener((obs, oldValue, newValue) -> {
+
+
+            canvas.getChildren().removeAll();
+            hexagon.getPoints().removeAll();
+            hexagon.getPoints().clear();
+            KOEF = newValue.intValue();
+            boolean check = false;
+
+            if (timeline.isAutoReverse()) {
+                timeline.stop();
+                hexagon.getPoints().removeAll();
+                hexagon.getPoints().clear();
+                hexagon.getPoints().addAll(corner1.xProperty().get(), corner1.yProperty().get(),
+                        corner2.xProperty().get(), corner2.yProperty().get(),
+                        corner3.xProperty().get(), corner3.yProperty().get(),
+                        corner4.xProperty().get(), corner4.yProperty().get(),
+                        corner5.xProperty().get(), corner5.yProperty().get(),
+                        corner6.xProperty().get(), corner6.yProperty().get()
+                );
+                canvas.getChildren().add(hexagon);
+                check = true;
+            }
+            sliderUNIX.setValue(newValue.intValue());
+
+
+            drawLines();
+            textSlider.setText(String.format("%d", newValue.intValue()));
+            working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
+
+            hexagon.getPoints().addAll(working_Dots.get(0).get(0), working_Dots.get(0).get(1),
+                    working_Dots.get(1).get(0), working_Dots.get(1).get(1),
+                    working_Dots.get(2).get(0), working_Dots.get(2).get(1),
+                    working_Dots.get(3).get(0), working_Dots.get(3).get(1),
+                    working_Dots.get(4).get(0), working_Dots.get(4).get(1),
+                    working_Dots.get(5).get(0), working_Dots.get(5).get(1)
+            );
+
+            canvas.getChildren().add(hexagon);
+            if (check) {
+                draw();
+            }
+//            try {
+//                startAnimation();
+//            } catch (InterruptedException e) {
+//                System.out.println("ТТТТТТУУУУУТТТ");
+//                throw new RuntimeException(e);
+//            }
         });
 
     }
@@ -1013,6 +1058,49 @@ public class AFController implements Initializable {
         return Double.parseDouble(String.valueOf(spinner.getValue()));
     }
 
+
+    public void drawLines() {
+        canvas.getChildren().clear();
+//        canvas.getChildren().add(hexagon);
+        canvas.getChildren().forEach(System.out::println);
+
+
+        int stepx = 10;
+        for (double i = 0; i <= CANVAS_SIZE * 2; i += UNIT/KOEF) {
+            if (i == CANVAS_SIZE) {
+                Polygon ox = new Polygon(i, 0, i, CANVAS_SIZE * 2);
+                ox.setFill(new Color(1, 1, 1, 0));
+                ox.setStroke(new Color(0, 0, 0, 1));
+                ox.setStrokeWidth(2);
+                canvas.getChildren().add(ox);
+
+            }
+            Polygon line = new Polygon(i, 0, i, CANVAS_SIZE * 2);
+            line.setFill(Color.GRAY);
+            line.setStroke(Color.GRAY);
+            line.setStrokeWidth(1);
+            canvas.getChildren().add(line);
+        }
+        for (double i = 0; i <= CANVAS_SIZE * 2; i += UNIT/KOEF) {
+
+            if (i == CANVAS_SIZE) {
+
+                Polygon ox = new Polygon(0, i, CANVAS_SIZE * 2, i);
+                ox.setFill(new Color(1, 1, 1, 0));
+                ox.setStroke(new Color(0, 0, 0, 1));
+                ox.setStrokeWidth(2);
+                canvas.getChildren().add(ox);
+
+            }
+            Polygon line = new Polygon(0, i, CANVAS_SIZE * 2, i);
+            line.setFill(Color.GRAY);
+            line.setStroke(Color.GRAY);
+            line.setStrokeWidth(1);
+            canvas.getChildren().add(line);
+        }
+
+
+    }
 }
 
 

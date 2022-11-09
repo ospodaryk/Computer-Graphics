@@ -1,6 +1,7 @@
 package com.computer_graphic.controllers;
 
 import com.computer_graphic.App;
+import com.computer_graphic.model.colors.RgbColor;
 import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingFXUtils;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.effect.Lighting;
@@ -18,11 +20,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.*;
+import org.w3c.dom.Node;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -41,20 +46,19 @@ import static javax.swing.text.html.HTML.Tag.*;
 public class AFController implements Initializable {
     private static Integer UNIT = 20;
     private static Integer CANVAS_SIZE = 250;
-    private static Integer UNIT_LENGTH = 10;
+    private static Integer UNIT_LENGTH = 20;
+    public Text coordinates;
 
     private static final int CANVAS_WIDTH = 400;
     private static final int CANVAS_HEIGHT = 400;
     public Pane canvas;
     public Polygon hexagon;
     public Spinner CX;
-    public Spinner CY;
     public Spinner X;
     public Spinner Y;
     public Spinner SIZE;
     public Spinner ANGLE;
     AtomicReference<Double> cx = new AtomicReference<>();
-    AtomicReference<Double> cy = new AtomicReference<>();
     AtomicReference<Double> centerx = new AtomicReference<>();
     AtomicReference<Double> centery = new AtomicReference<>();
     AtomicReference<Double> length = new AtomicReference<>();
@@ -76,9 +80,9 @@ public class AFController implements Initializable {
     @FXML
     private void build() throws InterruptedException {
         cx = new AtomicReference<>((double) CX.getValue());
-        cy = new AtomicReference<>((double) CY.getValue());
 //
-        ArrayList<ArrayList<Double>> newDots =  findDotsWithExactHead();
+        ArrayList<ArrayList<Double>> newDots = findDotsWithExactHead();
+
         setHexagon(newDots);
 //        ArrayList<ArrayList<Double>> ourdotsXY = findDotsWhenTurnAroundCenter(20);
 //        setHexagon(ourdotsXY);
@@ -86,35 +90,48 @@ public class AFController implements Initializable {
     }
 
     public ArrayList<ArrayList<Double>> findDotsWithExactHead() {
-        double tmpx=0*UNIT+CANVAS_SIZE;
-        double tmpy=length.get()*UNIT+CANVAS_SIZE;
+        ArrayList<ArrayList<Double>> sampleDots = findDots(centerx.get(), centery.get(), length.get());
+        double tmpx;
+        double tmplength;
+        double tmpy;
 
-        ArrayList<ArrayList<Double>> ourdotsOO = findDotsWhenTurnAroundCenter(0);
+        if (cx.get() == 4) {
+             tmpx = 164.39 + centerx.get();
+             tmpy = 300 + centery.get();
+             tmplength = length.get() * UNIT_LENGTH;
 
-        Double min = len(tmpx, tmpy, ourdotsOO.get(0).get(0), ourdotsOO.get(0).get(1));
+        } else {
+             tmpx = cx.get() * UNIT + CANVAS_SIZE;
+             tmplength = length.get() * UNIT_LENGTH;
+             tmpy = (Math.pow((length.get() * length.get() * UNIT_LENGTH * UNIT_LENGTH - cx.get() * UNIT * UNIT * cx.get()), 0.5)) + CANVAS_SIZE;
+        }
+        double tm=(Math.pow((length.get() * length.get()  - cx.get()  * cx.get()), 0.5));
 
-        Double x2 = ourdotsOO.get(0).get(0);
-        Double y2 = ourdotsOO.get(0).get(1);
-        for (int i = 0; i < ourdotsOO.size(); i++) {
-            Double tmp=min;
-            min = len(tmpx, tmpy, ourdotsOO.get(i).get(0), ourdotsOO.get(i).get(1));
-              if(tmp<min) {
-                  min=tmp;
-                  x2 = ourdotsOO.get(i).get(0);
-                  y2 = ourdotsOO.get(i).get(1);
-              }
+        if((cx.get()>2.5)||((cx.get()<0)&&(cx.get()>-2.5))){
+            tm*=-1;
+        }
+        coordinates.setText("( " + cx.get()+ " , " + Math.round(tm) + " )");
+        System.out.println("( " + (tmpx) + " , " + (tmpy) + " )");
+
+        Double min = len(tmpx, tmpy, sampleDots.get(0).get(0), sampleDots.get(0).get(1));
+
+        Double x2 = sampleDots.get(0).get(0);
+        Double y2 = sampleDots.get(0).get(1);
+        for (int i = 0; i < sampleDots.size(); i++) {
+            Double tmp = min;
+            min = len(tmpx, tmpy, sampleDots.get(i).get(0), sampleDots.get(i).get(1));
+            if (tmp < min) {
+                min = tmp;
+                x2 = sampleDots.get(i).get(0);
+                y2 = sampleDots.get(i).get(1);
+            }
 
         }
-        double tmplength = length.get() * UNIT_LENGTH;
-        double tmpvalue=(Math.abs((tmpx-CANVAS_SIZE) * (x2-CANVAS_SIZE)) + (Math.abs(tmpy-CANVAS_SIZE) * Math.abs(y2-CANVAS_SIZE))) / Math.pow(tmplength, 2);
-        if(tmpvalue>1){tmpvalue--;}
+        double tmpvalue = (Math.abs((tmpx - CANVAS_SIZE) * (x2 - CANVAS_SIZE)) + (Math.abs(tmpy - CANVAS_SIZE) * Math.abs(y2 - CANVAS_SIZE))) / Math.pow(tmplength, 2);
         double alpa = (Math.acos(tmpvalue));
-        System.out.println(alpa);
+        System.out.println(Math.toDegrees(alpa));
         ArrayList<ArrayList<Double>> ourdotsXY = findDotsWhenTurnAroundCenter(Math.toDegrees(alpa));
-
-
         return ourdotsXY;
-
     }
 
     public Double len(Double x1, Double x2, Double y1, Double y2) {
@@ -125,7 +142,6 @@ public class AFController implements Initializable {
 
     private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
 
-        System.out.println("======================================");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
         double tmplength = koef * UNIT_LENGTH;
@@ -160,8 +176,6 @@ public class AFController implements Initializable {
         v6.add(Math.abs(tmplength / 2 + tmpcentrx));
         v6.add(Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
         ourdots.add(v6);
-        ourdots.forEach(System.out::println);
-        System.out.println("======================================");
 
         return ourdots;
     }
@@ -327,6 +341,10 @@ public class AFController implements Initializable {
         v6.add(x);
         v6.add(y);
         ourdots.add(v6);
+        System.out.println("==============ANGLE===============");
+        System.out.println("--" + angle + "--");
+        ourdots.forEach(System.out::println);
+        System.out.println("======================================");
 
         return ourdots;
     }
@@ -545,20 +563,20 @@ public class AFController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        int t = 22;
+
         hexagon = new Polygon();
         hexagon.setFill(new Color(1, 1, 1, 0));
         hexagon.setStroke(new Color(0, 0, 0, 1));
         hexagon.setStrokeWidth(3);
 
         SpinnerValueFactory<Double> valueFactoryCX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
-        SpinnerValueFactory<Double> valueFactoryCY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 20, 10, 0.1);
         SpinnerValueFactory<Double> valueFactoryANGLE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 360, 0, 1);
 
         CX.setValueFactory(valueFactoryCX);
-        CY.setValueFactory(valueFactoryCY);
         X.setValueFactory(valueFactoryX);
         Y.setValueFactory(valueFactoryY);
         SIZE.setValueFactory(valueFactorySIZE);

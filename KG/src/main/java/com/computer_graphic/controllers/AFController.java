@@ -3,7 +3,13 @@ package com.computer_graphic.controllers;
 import com.computer_graphic.App;
 import com.computer_graphic.model.colors.RgbColor;
 import javafx.animation.*;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableListValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.effect.Lighting;
@@ -37,6 +44,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.Flow;
 import java.util.concurrent.atomic.AtomicReference;
@@ -52,6 +60,9 @@ public class AFController implements Initializable {
     private static final int CANVAS_WIDTH = 400;
     private static final int CANVAS_HEIGHT = 400;
     public Pane canvas;
+    public ComboBox TurnComboBox;
+    public static String valueFromComboBox;
+
     public Polygon hexagon;
     public Spinner CX;
     public Spinner X;
@@ -96,21 +107,21 @@ public class AFController implements Initializable {
         double tmpy;
 
         if (cx.get() == 4) {
-             tmpx = 164.39 + centerx.get();
-             tmpy = 300 + centery.get();
-             tmplength = length.get() * UNIT_LENGTH;
+            tmpx = 164.39 + centerx.get();
+            tmpy = 300 + centery.get();
+            tmplength = length.get() * UNIT_LENGTH;
 
         } else {
-             tmpx = cx.get() * UNIT + CANVAS_SIZE;
-             tmplength = length.get() * UNIT_LENGTH;
-             tmpy = (Math.pow((length.get() * length.get() * UNIT_LENGTH * UNIT_LENGTH - cx.get() * UNIT * UNIT * cx.get()), 0.5)) + CANVAS_SIZE;
+            tmpx = cx.get() * UNIT + CANVAS_SIZE;
+            tmplength = length.get() * UNIT_LENGTH;
+            tmpy = (Math.pow((length.get() * length.get() * UNIT_LENGTH * UNIT_LENGTH - cx.get() * UNIT * UNIT * cx.get()), 0.5)) + CANVAS_SIZE;
         }
-        double tm=(Math.pow((length.get() * length.get()  - cx.get()  * cx.get()), 0.5));
+        double tm = (Math.pow((length.get() * length.get() - cx.get() * cx.get()), 0.5));
 
-        if((cx.get()>2.5)||((cx.get()<0)&&(cx.get()>-2.5))){
-            tm*=-1;
+        if ((cx.get() > 2.5) || ((cx.get() < 0) && (cx.get() > -2.5))) {
+            tm *= -1;
         }
-        coordinates.setText("( " + cx.get()+ " , " + Math.round(tm) + " )");
+        coordinates.setText("( " + cx.get() + " , " + Math.round(tm) + " )");
         System.out.println("( " + (tmpx) + " , " + (tmpy) + " )");
 
         Double min = len(tmpx, tmpy, sampleDots.get(0).get(0), sampleDots.get(0).get(1));
@@ -141,7 +152,6 @@ public class AFController implements Initializable {
     }
 
     private static ArrayList<ArrayList<Double>> findDots(double centerx, double centery, double koef) {
-
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
         double tmplength = koef * UNIT_LENGTH;
@@ -180,27 +190,27 @@ public class AFController implements Initializable {
         return ourdots;
     }
 
-    public static double findx(double X, double Y, double angle) {
+    public static double findx(double X, double Y, double angle, double vx, double vy) {
 
-        double x = ((X - 300) * (Math.cos(Math.toRadians(angle))) + (Y - 200) * (Math.sin(Math.toRadians(angle)))) + 300;
+        double x = ((X - vx) * (Math.cos(Math.toRadians(angle))) + (Y - vy) * (Math.sin(Math.toRadians(angle)))) + vx;
         return x;
     }
 
-    public static double findy(double X, double Y, double angle) {
+    public static double findy(double X, double Y, double angle, double vx, double vy) {
 
-        double y = (-1 * (X - 300) * (Math.sin(Math.toRadians(angle))) + (Y - 200) * (Math.cos(Math.toRadians(angle)))) + 200;
+        double y = (-1 * (X - vx) * (Math.sin(Math.toRadians(angle))) + (Y - vy) * (Math.cos(Math.toRadians(angle)))) + vy;
         return y;
     }
 
-    private static ArrayList<ArrayList<Double>> turnDotsWithAngle(double centerx, double centery, double koef, double angle, double vx, double vy) {
+    private ArrayList<ArrayList<Double>> turnDotsArroundExactHead(double angle, double vx, double vy) {
         System.out.println("======================================");
 
         System.out.println("FLIPFLAPCHANGE");
 
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double tmplength = koef * UNIT_LENGTH;
-        double tmpcentrx = centerx * UNIT + CANVAS_SIZE;
-        double tmpcentry = centery * UNIT + CANVAS_SIZE;
+        double tmplength = length.get() * UNIT_LENGTH;
+        double tmpcentrx = centerx.get() * UNIT + CANVAS_SIZE;
+        double tmpcentry = centery.get() * UNIT + CANVAS_SIZE;
         double x = 0;
         double y = 0;
         double X = 0;
@@ -208,8 +218,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v1 = new ArrayList<>();
         X = (tmplength + tmpcentrx);
         Y = (tmpcentry);
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
+        x = findx(X, Y, angle,vx,vy);
+        y = findy(X, Y, angle,vx,vy);
         v1.add(x);
         v1.add(y);
         ourdots.add(v1);
@@ -217,8 +227,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v3 = new ArrayList<>();
         X = (tmplength / 2 + tmpcentrx);
         Y = ((Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry);
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
+        x = findx(X, Y, angle,vx,vy);
+        y = findy(X, Y, angle,vx,vy);
         v3.add(x);
         v3.add(y);
         ourdots.add(v3);
@@ -226,9 +236,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v4 = new ArrayList<>();
         X = Math.abs(tmplength / 2 - tmpcentrx);
         Y = (Math.sqrt(3.0 / 4.0) * tmplength) + tmpcentry;
-        ;
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
+        x = findx(X, Y, angle,vx,vy);
+        y = findy(X, Y, angle,vx,vy);
         v4.add(x);
         v4.add(y);
         ourdots.add(v4);
@@ -236,8 +245,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v2 = new ArrayList<>();
         X = (Math.abs(tmplength - tmpcentrx));
         Y = (tmpcentry);
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
+        x = findx(X, Y, angle,vx,vy);
+        y = findy(X, Y, angle,vx,vy);
         v2.add(x);
         v2.add(y);
         ourdots.add(v2);
@@ -245,8 +254,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v5 = new ArrayList<>();
         X = (Math.abs(tmplength / 2 - tmpcentrx));
         Y = (Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
+        x = findx(X, Y, angle,vx,vy);
+        y = findy(X, Y, angle,vx,vy);
         v5.add(x);
         v5.add(y);
         ourdots.add(v5);
@@ -254,8 +263,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v6 = new ArrayList<>();
         X = (Math.abs(tmplength / 2 + tmpcentrx));
         Y = (Math.abs((Math.sqrt(3.0 / 4.0) * tmplength) - tmpcentry));
-        x = findx(X, Y, angle);
-        y = findy(X, Y, angle);
+        x = findx(X, Y, angle,vx,vy);
+        y = findy(X, Y, angle,vx,vy);
         v6.add(x);
         v6.add(y);
         ourdots.add(v6);
@@ -266,15 +275,14 @@ public class AFController implements Initializable {
 
     }
 
-    public static double fx_TurnAroundCenter(double X, double Y, double angle, double centerx, double centery) {
-
-        double x = ((X) * (Math.cos(Math.toRadians(angle))) + (Y) * (Math.sin(Math.toRadians(angle)))) + CANVAS_SIZE + centerx * UNIT;
+    public double fx_TurnAroundCenter(double X, double Y, double angle) {
+        double x = ((X) * (Math.cos(Math.toRadians(angle))) + (Y) * (Math.sin(Math.toRadians(angle)))) + CANVAS_SIZE + centerx.get() * UNIT;
         return x;
     }
 
-    public static double fy_TurnAroundCenter(double X, double Y, double angle, double centerx, double centery) {
+    public double fy_TurnAroundCenter(double X, double Y, double angle) {
 
-        double y = (-1 * (X) * (Math.sin(Math.toRadians(angle))) + (Y) * (Math.cos(Math.toRadians(angle)))) + CANVAS_SIZE + centery * UNIT;
+        double y = (-1 * (X) * (Math.sin(Math.toRadians(angle))) + (Y) * (Math.cos(Math.toRadians(angle)))) + CANVAS_SIZE + centery.get() * UNIT;
         return y;
     }
 
@@ -290,8 +298,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v1 = new ArrayList<>();
         X = (tmplength);
         Y = (0);
-        x = fx_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
-        y = fy_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
+        x = fx_TurnAroundCenter(X, Y, angle);
+        y = fy_TurnAroundCenter(X, Y, angle);
         v1.add(x);
         v1.add(y);
         ourdots.add(v1);
@@ -299,8 +307,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v3 = new ArrayList<>();
         X = (tmplength / 2);
         Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        x = fx_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
-        y = fy_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
+        x = fx_TurnAroundCenter(X, Y, angle);
+        y = fy_TurnAroundCenter(X, Y, angle);
         v3.add(x);
         v3.add(y);
         ourdots.add(v3);
@@ -308,8 +316,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v4 = new ArrayList<>();
         X = ((-tmplength / 2));
         Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        x = fx_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
-        y = fy_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
+        x = fx_TurnAroundCenter(X, Y, angle);
+        y = fy_TurnAroundCenter(X, Y, angle);
         v4.add(x);
         v4.add(y);
 
@@ -318,8 +326,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v2 = new ArrayList<>();
         X = ((-tmplength));
         Y = (0);
-        x = fx_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
-        y = fy_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
+        x = fx_TurnAroundCenter(X, Y, angle);
+        y = fy_TurnAroundCenter(X, Y, angle);
         v2.add(x);
         v2.add(y);
         ourdots.add(v2);
@@ -327,8 +335,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v5 = new ArrayList<>();
         X = ((-tmplength / 2));
         Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        x = fx_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
-        y = fy_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
+        x = fx_TurnAroundCenter(X, Y, angle);
+        y = fy_TurnAroundCenter(X, Y, angle);
         v5.add(x);
         v5.add(y);
         ourdots.add(v5);
@@ -336,8 +344,8 @@ public class AFController implements Initializable {
         ArrayList<Double> v6 = new ArrayList<>();
         X = ((tmplength / 2));
         Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        x = fx_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
-        y = fy_TurnAroundCenter(X, Y, angle, centerx.get(), centery.get());
+        x = fx_TurnAroundCenter(X, Y, angle);
+        y = fy_TurnAroundCenter(X, Y, angle);
         v6.add(x);
         v6.add(y);
         ourdots.add(v6);
@@ -371,7 +379,71 @@ public class AFController implements Initializable {
     @FXML
     private void startAnimation() throws InterruptedException {
 
-        ArrayList<ArrayList<Double>> our_newx_dots = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), 0, 150, 113.39);
+
+        int startangle = 0;
+        int step = 10;
+        String valuecentr = "Центру (1,2)";
+
+        ArrayList<ArrayList<Double>> our_newx_dots = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot2 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot3 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot4 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot5 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot6 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot7 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot8 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot9 = new ArrayList<>();
+        ArrayList<ArrayList<Double>> our_newx_dot10 = new ArrayList<>();
+
+        String str = TurnComboBox.getValue().toString();
+        int start = str.indexOf("(");
+        int end = str.indexOf(")");
+        String outStr = str.substring(start + 2, end - 1);
+        System.out.println(outStr);
+        String[] numbers = outStr.split(" , ");
+        if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
+            our_newx_dots = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot2 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot3 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot4 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot5 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot6 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot7 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot8 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot9 = findDotsWhenTurnAroundCenter(startangle);
+            startangle += 2 * step;
+            our_newx_dot10 = findDotsWhenTurnAroundCenter(startangle);
+        } else {
+            our_newx_dots = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot2 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot3 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot4 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot5 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot6 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot7 =  turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot8 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot9 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+            startangle += 2 * step;
+            our_newx_dot10 = turnDotsArroundExactHead( startangle, Double.parseDouble(numbers[0]), Double.parseDouble(numbers[1]));
+        }
+
+
         canvas.getChildren().remove(hexagon);
         canvas.getChildren().remove(path);
         corner1.xProperty().set(hexagon.getPoints().get(0));
@@ -386,21 +458,9 @@ public class AFController implements Initializable {
         corner5.yProperty().set(hexagon.getPoints().get(9));
         corner6.xProperty().set(hexagon.getPoints().get(10));
         corner6.yProperty().set(hexagon.getPoints().get(11));
-
-
         path = new Path(corner1, corner2, corner3, corner4, corner5, corner6, new ClosePath());
         canvas.getChildren().add(path);
-        int startangle = 0;
-        int step = 10;
-        ArrayList<ArrayList<Double>> our_newx_dot2 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 2 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot3 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 4 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot4 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 6 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot5 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 8 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot6 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 10 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot7 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 12 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot8 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 14 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot9 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 16 * step, 150, 113.39);
-        ArrayList<ArrayList<Double>> our_newx_dot10 = turnDotsWithAngle(centerx.get(), centerx.get(), length.get(), startangle + 18 * step, 150, 113.39);
+
 
         int seconds = 1;
         timeline = new Timeline(
@@ -563,6 +623,10 @@ public class AFController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        TurnComboBox.setOnAction(event -> {
+            valueFromComboBox = (String) TurnComboBox.getValue();
+            System.out.println(valueFromComboBox);
+        });
         int t = 22;
 
         hexagon = new Polygon();
@@ -573,7 +637,7 @@ public class AFController implements Initializable {
         SpinnerValueFactory<Double> valueFactoryCX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
-        SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 20, 10, 0.1);
+        SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 20, 5, 0.1);
         SpinnerValueFactory<Double> valueFactoryANGLE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 360, 0, 1);
 
         CX.setValueFactory(valueFactoryCX);
@@ -601,6 +665,7 @@ public class AFController implements Initializable {
 
         canvas.getChildren().add(hexagon);
 
+        setComboBox(ourdots);
 
         X.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
 
@@ -608,6 +673,7 @@ public class AFController implements Initializable {
             centerx.set(newValue);
             ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(angle.get());
             setHexagon(our_newx_dots);
+            setComboBox(our_newx_dots);
 
         });
 
@@ -615,6 +681,8 @@ public class AFController implements Initializable {
             System.out.println("NEWX:" + newValue);
             centery.set(newValue);
             ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(angle.get());
+            setComboBox(our_newx_dots);
+
             setHexagon(our_newx_dots);
 
 
@@ -622,8 +690,10 @@ public class AFController implements Initializable {
 
         SIZE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
             System.out.println("NEWX:" + newValue);
+
             length.set(newValue);
             ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(angle.get());
+            setComboBox(our_newx_dots);
             setHexagon(our_newx_dots);
 
         });
@@ -632,21 +702,67 @@ public class AFController implements Initializable {
 
             angle.set(newValue);
             ArrayList<ArrayList<Double>> our_newx_dots = findDotsWhenTurnAroundCenter(angle.get());
+            setComboBox(our_newx_dots);
+
             setHexagon(our_newx_dots);
 
         });
 
     }
 
-    public void formulaCorner(int x, int y) {
+    public void setComboBox(ArrayList<ArrayList<Double>> our_newx_dots) {
+//        int i = 0;
+//        ArrayList<Double> tmp = new ArrayList<>();
+//        for (int j = 0; j < our_newx_dots.get(i).size(); j++) {
+//            tmp.add(our_newx_dots.get(i).get(j) - CANVAS_SIZE);
+//        }
+//        our_newx_dots.set(i, tmp);
+//        i++;
+//        ArrayList<Double> tmp1 = new ArrayList<>();
+//        for (int j = 0; j < our_newx_dots.get(i).size(); j++) {
+//            tmp1.add(our_newx_dots.get(i).get(j) - CANVAS_SIZE);
+//        }
+//        our_newx_dots.set(i, tmp1);
+//        i++;
+//        ArrayList<Double> tmp2 = new ArrayList<>();
+//        for (int j = 0; j < our_newx_dots.get(i).size(); j++) {
+//            tmp2.add(our_newx_dots.get(i).get(j) - CANVAS_SIZE);
+//        }
+//        our_newx_dots.set(i, tmp2);
+//        i++;
+//        ArrayList<Double> tmp3 = new ArrayList<>();
+//        for (int j = 0; j < our_newx_dots.get(i).size(); j++) {
+//            tmp3.add(our_newx_dots.get(i).get(j) - CANVAS_SIZE);
+//        }
+//        our_newx_dots.set(i, tmp3);
+//        i++;
+//        ArrayList<Double> tmp4 = new ArrayList<>();
+//        for (int j = 0; j < our_newx_dots.get(i).size(); j++) {
+//            tmp4.add(our_newx_dots.get(i).get(j) - CANVAS_SIZE);
+//        }
+//        our_newx_dots.set(i, tmp4);
+//        i++;
+//        ArrayList<Double> tmp5 = new ArrayList<>();
+//        for (int j = 0; j < our_newx_dots.get(i).size(); j++) {
+//            tmp5.add(our_newx_dots.get(i).get(j) - CANVAS_SIZE);
+//        }
+//        our_newx_dots.set(i, tmp5);
+//        i++;
 
+
+        TurnComboBox.getItems().clear();
+        ObservableList<String> ourlist = FXCollections.observableArrayList("Вершини ( " + our_newx_dots.get(0).get(0).toString() + " , " + our_newx_dots.get(0).get(1).toString() + " )",
+                "Вершини ( " + (our_newx_dots.get(1).get(0)).toString() + " , " + our_newx_dots.get(1).get(1).toString() + " )",
+                "Вершини ( " + our_newx_dots.get(2).get(0).toString() + " , " + our_newx_dots.get(2).get(1).toString() + " )",
+                "Вершини ( " + our_newx_dots.get(3).get(0).toString() + " , " + our_newx_dots.get(3).get(1).toString() + " )",
+                "Вершини ( " + our_newx_dots.get(4).get(0).toString() + " , " + our_newx_dots.get(4).get(1).toString() + " )",
+                "Вершини ( " + our_newx_dots.get(5).get(0).toString() + " , " + our_newx_dots.get(5).get(1).toString() + " )",
+                "Центру ( " + centerx.get() + " , " + centery.get() + " )"
+        );
+        TurnComboBox.setItems(ourlist);
 
     }
 
-    public void findHEcagonByOneCorner(int x, int y) {
-
-
-    }
 
     public void setHexagon(ArrayList<ArrayList<Double>> our_newx_dots) {
         canvas.getChildren().remove(hexagon);

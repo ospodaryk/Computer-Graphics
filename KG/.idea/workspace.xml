@@ -220,43 +220,38 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>127</line>
-          <option name="timeStamp" value="26" />
+          <line>397</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>129</line>
-          <option name="timeStamp" value="34" />
+          <line>398</line>
+          <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="38" />
+          <line>399</line>
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>104</line>
-          <option name="timeStamp" value="39" />
+          <line>400</line>
+          <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>105</line>
-          <option name="timeStamp" value="41" />
+          <line>401</line>
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>130</line>
-          <option name="timeStamp" value="44" />
+          <line>402</line>
+          <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>131</line>
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/computer_graphic/controllers/AFController.java</url>
-          <line>132</line>
-          <option name="timeStamp" value="46" />
+          <line>424</line>
+          <option name="timeStamp" value="78" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

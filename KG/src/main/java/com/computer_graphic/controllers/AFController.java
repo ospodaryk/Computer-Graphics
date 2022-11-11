@@ -39,7 +39,7 @@ public class AFController implements Initializable {
     private static double KOEF = 1;
 
     private static Integer CANVAS_SIZE = 250;
-    private static Integer UNIT_LENGTH = 20;
+
     public Text textSlider;
     public Text coordinates;
 
@@ -54,6 +54,8 @@ public class AFController implements Initializable {
     public Spinner X;
     public Spinner Y;
     public Spinner SIZE;
+    public Spinner RESIZE;
+
     public Spinner ANGLE;
     boolean check = false;
     AtomicReference<Double> cx = new AtomicReference<>();
@@ -61,6 +63,8 @@ public class AFController implements Initializable {
     AtomicReference<Double> centery = new AtomicReference<>();
     AtomicReference<Double> length = new AtomicReference<>();
     AtomicReference<Double> angle = new AtomicReference<>();
+    AtomicReference<Double> resize = new AtomicReference<>();
+
     Timeline timeline = new Timeline();
     ArrayList<ArrayList<Double>> working_Dots = new ArrayList<>();
 
@@ -162,14 +166,14 @@ public class AFController implements Initializable {
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
-        firstRow.add((UNIT_LENGTH) * index / KOEF);
+        firstRow.add((UNIT) * index / KOEF);
         firstRow.add(0.0);
         firstRow.add(0.0);
         rotatingSystemMatrix.add(firstRow);
 
         ArrayList<Double> secondRow = new ArrayList<>();
         secondRow.add(0.0);
-        secondRow.add((UNIT_LENGTH) * index / KOEF);
+        secondRow.add((UNIT) * index / KOEF);
         secondRow.add(0.0);
         rotatingSystemMatrix.add(secondRow);
 
@@ -213,6 +217,8 @@ public class AFController implements Initializable {
 
     @FXML
     private void build() throws InterruptedException {
+        centerx.set(0.0);
+        centery.set(0.0);
         cx = new AtomicReference<>((double) CX.getValue());
         ArrayList<ArrayList<Double>> newDots = findDotsWithExactHead();
         setHexagon(newDots);
@@ -226,22 +232,10 @@ public class AFController implements Initializable {
         return (a - CANVAS_SIZE) / UNIT;
     }
 
-    public static double findx(double X, double Y, double angle, double vx, double vy) {
-
-        double x = ((X - vx) * (Math.cos(Math.toRadians(angle))) + (Y - vy) * (Math.sin(Math.toRadians(angle)))) + vx;
-        return x;
-    }
-
-    public static double findy(double X, double Y, double angle, double vx, double vy) {
-
-        double y = (-1 * (X - vx) * (Math.sin(Math.toRadians(angle))) + (Y - vy) * (Math.cos(Math.toRadians(angle)))) + vy;
-        return y;
-    }
 
     private ArrayList<ArrayList<Double>> turnDotsArroundExactHead(double angle, double vx, double vy, double index) {
         ArrayList<ArrayList<Double>> ourdots = new ArrayList<>();
-        double x = 0;
-        double y = 0;
+
         double X = 0;
         double Y = 0;
         ArrayList<Double> v1 = new ArrayList<>();
@@ -515,19 +509,22 @@ public class AFController implements Initializable {
         SpinnerValueFactory<Double> valueFactoryCX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryX = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
         SpinnerValueFactory<Double> valueFactoryY = new SpinnerValueFactory.DoubleSpinnerValueFactory(-20, 20, 0, 0.1);
-        SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 20, 5, 0.1);
+        SpinnerValueFactory<Double> valueFactorySIZE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 5, 3, 0.1);
         SpinnerValueFactory<Double> valueFactoryANGLE = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 360, 0, 1);
+        SpinnerValueFactory<Double> valueFactoryResize = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, 3, 2, 0.1);
 
         CX.setValueFactory(valueFactoryCX);
         X.setValueFactory(valueFactoryX);
         Y.setValueFactory(valueFactoryY);
         SIZE.setValueFactory(valueFactorySIZE);
         ANGLE.setValueFactory(valueFactoryANGLE);
+        RESIZE.setValueFactory(valueFactoryResize);
 
         centerx = new AtomicReference<>((double) X.getValue());
         centery = new AtomicReference<>((double) Y.getValue());
         length = new AtomicReference<>((double) SIZE.getValue());
         angle = new AtomicReference<>((double) ANGLE.getValue());
+        resize = new AtomicReference<>((double) RESIZE.getValue());
 
 
         working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
@@ -573,6 +570,11 @@ public class AFController implements Initializable {
             working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
             setComboBox(working_Dots);
             setHexagon(working_Dots);
+
+        });
+        RESIZE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
+
+            resize.set(newValue);
 
         });
 
@@ -784,11 +786,15 @@ public class AFController implements Initializable {
         }
         System.out.println("n0 " + numbers[0] + "n1 " + numbers[1]);
 
+        double increase=resize.get();
+
+
         System.out.println("a " + a + "b " + b);
         working_Dots.forEach(System.out::println);
         if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
-            double size = 1.0;
-            double stepSize = 0.05;
+            double size =1;
+
+            double stepSize =(increase- size)/10;
             our_newx_dots = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
@@ -942,7 +948,7 @@ public class AFController implements Initializable {
         canvas.getChildren().add(path);
 
 
-        double seconds = 0.1;
+        double seconds = 0.2;
         Timeline timeline2 = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(corner1.xProperty(), our_newx_dots.get(0).get(0)),
@@ -1198,7 +1204,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner6.yProperty(), our_newx_dot19.get(5).get(1)))
         );
         timeline = timeline2;
-        timeline.setAutoReverse(true);
+        timeline.setAutoReverse(false);
         timeline.setCycleCount(10);
         timeline.play();
 
@@ -1211,20 +1217,17 @@ public class AFController implements Initializable {
         double tmpy;
 
         tmpx = cx.get() * UNIT + CANVAS_SIZE;
-        tmplength = length.get() * UNIT_LENGTH / KOEF;
-        tmpy = (Math.pow((length.get() * length.get() * UNIT_LENGTH * UNIT_LENGTH - cx.get() * UNIT * UNIT * cx.get()), 0.5)) / KOEF + CANVAS_SIZE;
-//        }
-        double tm = (Math.pow((length.get() * length.get() - cx.get() * cx.get()) / KOEF, 0.5));
-        System.out.println(tm);
-        int rod = (int) (tm * 1000);
-        System.out.println(rod);
+        tmplength = length.get() * UNIT;
+        tmpy = (Math.pow((tmplength * tmplength - cx.get() * cx.get() * UNIT * UNIT), 0.5)) + CANVAS_SIZE;
 
-        if ((cx.get() > 2.5) || ((cx.get() < 0) && (cx.get() > -2.5))) {
-            rod *= -1;
+        double tm = (Math.pow((length.get() * length.get() - cx.get() * cx.get()), 0.5));
+
+
+        if ((cx.get() < 2.5) || ((cx.get() > 0) && (cx.get() < -2.5))) {
+            tm *= -1;
         }
-        double k = rod / 1000;
-        System.out.println(k);
-        coordinates.setText("( " + cx.get() + " , " + k + " )");
+
+        coordinates.setText("( " + cx.get() + " , " + tm + " )");
 
         Double min = len(tmpx, tmpy, sampleDots.get(0).get(0), sampleDots.get(0).get(1));
 
@@ -1241,6 +1244,10 @@ public class AFController implements Initializable {
 
         }
         double tmpvalue = (Math.abs((tmpx - CANVAS_SIZE) * (x2 - CANVAS_SIZE)) + (Math.abs(tmpy - CANVAS_SIZE) * Math.abs(y2 - CANVAS_SIZE))) / Math.pow(tmplength, 2);
+        if (tmpvalue > 1) {
+            tmpvalue--;
+        }
+
         double alpa = (Math.acos(tmpvalue));
         System.out.println(Math.toDegrees(alpa));
         ArrayList<ArrayList<Double>> ourdotsXY = findDotsWhenTurnAroundCenter(Math.toDegrees(alpa), 1);

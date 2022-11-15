@@ -39,7 +39,6 @@ public class AFController implements Initializable {
     private static double KOEF = 1;
 
     private static Integer CANVAS_SIZE = 250;
-
     public Text textSlider;
     public Text coordinates;
 
@@ -57,17 +56,15 @@ public class AFController implements Initializable {
     public Spinner RESIZE;
 
     public Spinner ANGLE;
-    boolean check = false;
+    boolean checkIfMove = false;
     AtomicReference<Double> cx = new AtomicReference<>();
     AtomicReference<Double> centerx = new AtomicReference<>();
     AtomicReference<Double> centery = new AtomicReference<>();
     AtomicReference<Double> length = new AtomicReference<>();
     AtomicReference<Double> angle = new AtomicReference<>();
     AtomicReference<Double> resize = new AtomicReference<>();
-
     Timeline timeline = new Timeline();
     ArrayList<ArrayList<Double>> working_Dots = new ArrayList<>();
-
     Path path = new Path();
     MoveTo corner1 = new MoveTo();
     LineTo corner2 = new LineTo();
@@ -96,7 +93,7 @@ public class AFController implements Initializable {
 
         ArrayList<Double> thirdRow = new ArrayList<>();
         thirdRow.add(vx);
-        thirdRow.add(vy);
+        thirdRow.add(-vy);
         thirdRow.add(1.0);
         rotatingSystemMatrix.add(thirdRow);
 
@@ -109,6 +106,7 @@ public class AFController implements Initializable {
     public ArrayList<ArrayList<Double>> rotateExactHeadSystemMatrix(double vx, double vy) {
         vx -= CANVAS_SIZE;
         vy -= CANVAS_SIZE;
+
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
         firstRow.add(1.0);
@@ -125,7 +123,7 @@ public class AFController implements Initializable {
 
         ArrayList<Double> thirdRow = new ArrayList<>();
         thirdRow.add(-vx);
-        thirdRow.add(-vy);
+        thirdRow.add(vy);
         thirdRow.add(1.0);
         rotatingSystemMatrix.add(thirdRow);
 
@@ -152,7 +150,6 @@ public class AFController implements Initializable {
 
 
         ArrayList<Double> thirdRow = new ArrayList<>();
-        //тут координати точко навколо якої крутиться
         thirdRow.add(0.0);
         thirdRow.add(0.0);
         thirdRow.add(1.0);
@@ -186,8 +183,6 @@ public class AFController implements Initializable {
 
         return rotatingSystemMatrix;
     }
-
-    //працює
     public ArrayList<ArrayList<Double>> moveSystemMatrix(double dx, double dy) {
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
@@ -206,7 +201,7 @@ public class AFController implements Initializable {
 
         ArrayList<Double> thirdRow = new ArrayList<>();
         thirdRow.add(dx * UNIT + CANVAS_SIZE);
-        thirdRow.add(dy * UNIT + CANVAS_SIZE);
+        thirdRow.add(-dy * UNIT + CANVAS_SIZE);
         thirdRow.add(1.0);
         rotatingSystemMatrix.add(thirdRow);
 
@@ -288,18 +283,15 @@ public class AFController implements Initializable {
         ourdots.add(v6);
 
         ArrayList<ArrayList<Double>> matrixtoMove = moveSystemMatrix(centerx.get(), centery.get());
-
         ArrayList<ArrayList<Double>> matrixtoRotate1 = rotateExactHeadSystemMatrix(vx, vy);
         ArrayList<ArrayList<Double>> matrixtoRotate2 = rotatingSystemMatrix(angle);
         ArrayList<ArrayList<Double>> matrixtoRotate3 = rotateBackExactHeadSystemMatrix(vx, vy);
-
 
         ArrayList<ArrayList<Double>> matrixtoResize = resizeSystemMatrix(index);
         ourdots = multiplyMatrix(ourdots, matrixtoResize);
         ourdots = multiplyMatrix(ourdots, matrixtoRotate1);
         ourdots = multiplyMatrix(ourdots, matrixtoRotate2);
         ourdots = multiplyMatrix(ourdots, matrixtoRotate3);
-
         ourdots = multiplyMatrix(ourdots, matrixtoMove);
         return ourdots;
 
@@ -388,13 +380,9 @@ public class AFController implements Initializable {
         int col2 = matrix.get(0).size();
         Double C[][] = new Double[ourdots.size()][ourdots.get(0).size()];
 
-        // Multiply the two matrices
         for (int i = 0; i < row1; i++) {
             for (int j = 0; j < col2; j++) {
-                // Initialize the element C(i,j) with zero
-
                 C[i][j] = ourdots.get(i).get(0) * matrix.get(0).get(j) + ourdots.get(i).get(1) * matrix.get(1).get(j) + ourdots.get(i).get(2) * matrix.get(2).get(j);
-
             }
         }
 
@@ -445,9 +433,9 @@ public class AFController implements Initializable {
 
     @FXML
     private void startAnimation() throws InterruptedException {
-        if (!check) {
+        if (!checkIfMove) {
             draw();
-            check = true;
+            checkIfMove = true;
         } else {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Анімація вже запущена");
@@ -458,7 +446,7 @@ public class AFController implements Initializable {
 
     @FXML
     private void stopAnimation() throws InterruptedException {
-        check = false;
+        checkIfMove = false;
         timeline.stop();
         hexagon.getPoints().removeAll();
         hexagon.getPoints().clear();
@@ -483,7 +471,7 @@ public class AFController implements Initializable {
         working_Dots.get(4).set(0, corner5.yProperty().get());
         working_Dots.get(5).set(0, corner6.xProperty().get());
         working_Dots.get(5).set(0, corner6.yProperty().get());
-        length.set(tmplength / 2 / UNIT);
+        length.set(tmplength / 2 / UNIT*KOEF);
         System.out.println("===========================");
 
         System.out.println(length);
@@ -625,7 +613,7 @@ public class AFController implements Initializable {
             KOEF = newValue.intValue();
             boolean check = false;
 
-            if (timeline.isAutoReverse()) {
+            if (checkIfMove) {
                 timeline.stop();
                 hexagon.getPoints().removeAll();
                 hexagon.getPoints().clear();
@@ -637,7 +625,6 @@ public class AFController implements Initializable {
                         corner6.xProperty().get(), corner6.yProperty().get()
                 );
                 canvas.getChildren().add(hexagon);
-                check = true;
             }
             sliderUNIX.setValue(newValue.intValue());
 
@@ -655,7 +642,7 @@ public class AFController implements Initializable {
             );
 
             canvas.getChildren().add(hexagon);
-            if (check) {
+            if (checkIfMove) {
                 draw();
             }
         });
@@ -665,6 +652,7 @@ public class AFController implements Initializable {
     public void setComboBox(ArrayList<ArrayList<Double>> our_newx_dots) {
 
         TurnComboBox.getItems().clear();
+        //якщо значення відємне то множити на -
         ObservableList<String> ourlist = FXCollections.observableArrayList("Вершини ( " + MapValueFromCanvas(our_newx_dots.get(0).get(0)).toString() + " , " + MapValueFromCanvas(our_newx_dots.get(0).get(1)).toString() + " )",
                 "Вершини ( " + MapValueFromCanvas(our_newx_dots.get(1).get(0)).toString() + " , " + MapValueFromCanvas(our_newx_dots.get(1).get(1)).toString() + " )",
                 "Вершини ( " + MapValueFromCanvas(our_newx_dots.get(2).get(0)).toString() + " , " + MapValueFromCanvas(our_newx_dots.get(2).get(1)).toString() + " )",
@@ -784,13 +772,10 @@ public class AFController implements Initializable {
             }
 
         }
-        System.out.println("n0 " + numbers[0] + "n1 " + numbers[1]);
 
         double increase=resize.get();
 
 
-        System.out.println("a " + a + "b " + b);
-        working_Dots.forEach(System.out::println);
         if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
             double size =1;
 
@@ -889,7 +874,7 @@ public class AFController implements Initializable {
 
             startangle += step;
             our_newx_dot9 = turnDotsArroundExactHead(startangle, working_Dots.get(i_index).get(0), working_Dots.get(i_index).get(1), size);
-            size += stepSize;
+//            size += stepSize;
 
             startangle += step;
             our_newx_dot10 = turnDotsArroundExactHead(startangle, working_Dots.get(i_index).get(0), working_Dots.get(i_index).get(1), size);
@@ -913,6 +898,7 @@ public class AFController implements Initializable {
 
             startangle += step;
             our_newx_dot15 = turnDotsArroundExactHead(startangle, working_Dots.get(i_index).get(0), working_Dots.get(i_index).get(1), size);
+            size -= stepSize;
 
             startangle += step;
             our_newx_dot16 = turnDotsArroundExactHead(startangle, working_Dots.get(i_index).get(0), working_Dots.get(i_index).get(1), size);
@@ -1204,7 +1190,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner6.yProperty(), our_newx_dot19.get(5).get(1)))
         );
         timeline = timeline2;
-        timeline.setAutoReverse(false);
+        timeline.setAutoReverse(true);
         timeline.setCycleCount(10);
         timeline.play();
 

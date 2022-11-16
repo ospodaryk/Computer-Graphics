@@ -74,9 +74,8 @@ public class AFController implements Initializable {
     LineTo corner6 = new LineTo();
 
     public ArrayList<ArrayList<Double>> rotateBackExactHeadSystemMatrix(double vx, double vy) {
-        vx -= CANVAS_SIZE;
-        vy -= CANVAS_SIZE;
-
+        vx -= CANVAS_SIZE+centerx.get()*UNIT;
+        vy -= CANVAS_SIZE-centery.get()*UNIT;
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
         firstRow.add(1.0);
@@ -104,8 +103,8 @@ public class AFController implements Initializable {
 
 
     public ArrayList<ArrayList<Double>> rotateExactHeadSystemMatrix(double vx, double vy) {
-        vx -= CANVAS_SIZE;
-        vy -= CANVAS_SIZE;
+        vx -= CANVAS_SIZE+centerx.get()*UNIT;
+        vy -= CANVAS_SIZE-centery.get()*UNIT;
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
@@ -138,12 +137,12 @@ public class AFController implements Initializable {
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
         firstRow.add(Math.cos(Math.toRadians(angle)));
-        firstRow.add(Math.sin(Math.toRadians(angle)));
+        firstRow.add(-Math.sin(Math.toRadians(angle)));
         firstRow.add(0.0);
         rotatingSystemMatrix.add(firstRow);
 
         ArrayList<Double> secondRow = new ArrayList<>();
-        secondRow.add(-(Math.sin(Math.toRadians(angle))));
+        secondRow.add((Math.sin(Math.toRadians(angle))));
         secondRow.add(Math.cos(Math.toRadians(angle)));
         secondRow.add(0.0);
         rotatingSystemMatrix.add(secondRow);
@@ -163,14 +162,14 @@ public class AFController implements Initializable {
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
-        firstRow.add( index / KOEF);
+        firstRow.add((UNIT) * index / KOEF);
         firstRow.add(0.0);
         firstRow.add(0.0);
         rotatingSystemMatrix.add(firstRow);
 
         ArrayList<Double> secondRow = new ArrayList<>();
         secondRow.add(0.0);
-        secondRow.add(index / KOEF);
+        secondRow.add((UNIT) * index / KOEF);
         secondRow.add(0.0);
         rotatingSystemMatrix.add(secondRow);
 
@@ -178,7 +177,7 @@ public class AFController implements Initializable {
         ArrayList<Double> thirdRow = new ArrayList<>();
         thirdRow.add(0.0);
         thirdRow.add(0.0);
-        thirdRow.add(index / KOEF);
+        thirdRow.add(1.0);
         rotatingSystemMatrix.add(thirdRow);
 
         return rotatingSystemMatrix;
@@ -187,22 +186,22 @@ public class AFController implements Initializable {
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
-        firstRow.add(CANVAS_SIZE/UNIT);
+        firstRow.add(1.0);
         firstRow.add(0.0);
         firstRow.add(0.0);
         rotatingSystemMatrix.add(firstRow);
 
         ArrayList<Double> secondRow = new ArrayList<>();
         secondRow.add(0.0);
-        secondRow.add(CANVAS_SIZE/UNIT);
+        secondRow.add(1.0);
         secondRow.add(0.0);
         rotatingSystemMatrix.add(secondRow);
 
 
         ArrayList<Double> thirdRow = new ArrayList<>();
-        thirdRow.add(dx +CANVAS_SIZE/UNIT);
-        thirdRow.add(-dy  +CANVAS_SIZE/UNIT);
-        thirdRow.add(CANVAS_SIZE/UNIT);
+        thirdRow.add(dx * UNIT + CANVAS_SIZE);
+        thirdRow.add(-dy * UNIT + CANVAS_SIZE);
+        thirdRow.add(1.0);
         rotatingSystemMatrix.add(thirdRow);
 
 
@@ -306,50 +305,50 @@ public class AFController implements Initializable {
         ArrayList<Double> v1 = new ArrayList<>();
         X = (tmplength);
         Y = (0);
-        v1.add(UNIT*X);
-        v1.add(UNIT*Y);
-        v1.add(UNIT);
+        v1.add(X);
+        v1.add(Y);
+        v1.add(1.0);
 
         ourdots.add(v1);
 
         ArrayList<Double> v3 = new ArrayList<>();
         X = (tmplength / 2);
         Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        v3.add(UNIT*X);
-        v3.add(UNIT*Y);
-        v3.add(UNIT);
+        v3.add(X);
+        v3.add(Y);
+        v3.add(1.0);
         ourdots.add(v3);
 
         ArrayList<Double> v4 = new ArrayList<>();
         X = ((-tmplength / 2));
         Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        v4.add(UNIT*X);
-        v4.add(UNIT*Y);
-        v4.add(UNIT);
+        v4.add(X);
+        v4.add(Y);
+        v4.add(1.0);
         ourdots.add(v4);
 
         ArrayList<Double> v2 = new ArrayList<>();
         X = ((-tmplength));
         Y = (0);
-        v2.add(UNIT*X);
-        v2.add(UNIT*Y);
-        v2.add(UNIT);
+        v2.add(X);
+        v2.add(Y);
+        v2.add(1.0);
         ourdots.add(v2);
 
         ArrayList<Double> v5 = new ArrayList<>();
         X = ((-tmplength / 2));
         Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        v5.add(UNIT*X);
-        v5.add(UNIT*Y);
-        v5.add(UNIT);
+        v5.add(X);
+        v5.add(Y);
+        v5.add(1.0);
         ourdots.add(v5);
 
         ArrayList<Double> v6 = new ArrayList<>();
         X = ((tmplength / 2));
         Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        v6.add(UNIT*X);
-        v6.add(UNIT*Y);
-        v6.add(UNIT);
+        v6.add(X);
+        v6.add(Y);
+        v6.add(1.0);
         ourdots.add(v6);
 
 
@@ -652,7 +651,6 @@ public class AFController implements Initializable {
     public void setComboBox(ArrayList<ArrayList<Double>> our_newx_dots) {
 
         TurnComboBox.getItems().clear();
-        //якщо значення відємне то множити на -
         ObservableList<String> ourlist = FXCollections.observableArrayList("Вершини ( " + MapValueFromCanvas(our_newx_dots.get(0).get(0)).toString() + " , " + MapValueFromCanvas(our_newx_dots.get(0).get(1)).toString() + " )",
                 "Вершини ( " + MapValueFromCanvas(our_newx_dots.get(1).get(0)).toString() + " , " + MapValueFromCanvas(our_newx_dots.get(1).get(1)).toString() + " )",
                 "Вершини ( " + MapValueFromCanvas(our_newx_dots.get(2).get(0)).toString() + " , " + MapValueFromCanvas(our_newx_dots.get(2).get(1)).toString() + " )",

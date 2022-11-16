@@ -163,14 +163,14 @@ public class AFController implements Initializable {
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
-        firstRow.add((UNIT) * index / KOEF);
+        firstRow.add( index / KOEF);
         firstRow.add(0.0);
         firstRow.add(0.0);
         rotatingSystemMatrix.add(firstRow);
 
         ArrayList<Double> secondRow = new ArrayList<>();
         secondRow.add(0.0);
-        secondRow.add((UNIT) * index / KOEF);
+        secondRow.add(index / KOEF);
         secondRow.add(0.0);
         rotatingSystemMatrix.add(secondRow);
 
@@ -178,7 +178,7 @@ public class AFController implements Initializable {
         ArrayList<Double> thirdRow = new ArrayList<>();
         thirdRow.add(0.0);
         thirdRow.add(0.0);
-        thirdRow.add(1.0);
+        thirdRow.add(index / KOEF);
         rotatingSystemMatrix.add(thirdRow);
 
         return rotatingSystemMatrix;
@@ -187,22 +187,22 @@ public class AFController implements Initializable {
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
-        firstRow.add(1.0);
+        firstRow.add(CANVAS_SIZE/UNIT);
         firstRow.add(0.0);
         firstRow.add(0.0);
         rotatingSystemMatrix.add(firstRow);
 
         ArrayList<Double> secondRow = new ArrayList<>();
         secondRow.add(0.0);
-        secondRow.add(1.0);
+        secondRow.add(CANVAS_SIZE/UNIT);
         secondRow.add(0.0);
         rotatingSystemMatrix.add(secondRow);
 
 
         ArrayList<Double> thirdRow = new ArrayList<>();
-        thirdRow.add(dx * UNIT + CANVAS_SIZE);
-        thirdRow.add(-dy * UNIT + CANVAS_SIZE);
-        thirdRow.add(1.0);
+        thirdRow.add(dx +CANVAS_SIZE/UNIT);
+        thirdRow.add(-dy  +CANVAS_SIZE/UNIT);
+        thirdRow.add(CANVAS_SIZE/UNIT);
         rotatingSystemMatrix.add(thirdRow);
 
 
@@ -306,50 +306,50 @@ public class AFController implements Initializable {
         ArrayList<Double> v1 = new ArrayList<>();
         X = (tmplength);
         Y = (0);
-        v1.add(X);
-        v1.add(Y);
-        v1.add(1.0);
+        v1.add(UNIT*X);
+        v1.add(UNIT*Y);
+        v1.add(UNIT);
 
         ourdots.add(v1);
 
         ArrayList<Double> v3 = new ArrayList<>();
         X = (tmplength / 2);
         Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        v3.add(X);
-        v3.add(Y);
-        v3.add(1.0);
+        v3.add(UNIT*X);
+        v3.add(UNIT*Y);
+        v3.add(UNIT);
         ourdots.add(v3);
 
         ArrayList<Double> v4 = new ArrayList<>();
         X = ((-tmplength / 2));
         Y = ((Math.sqrt(3.0 / 4.0) * tmplength));
-        v4.add(X);
-        v4.add(Y);
-        v4.add(1.0);
+        v4.add(UNIT*X);
+        v4.add(UNIT*Y);
+        v4.add(UNIT);
         ourdots.add(v4);
 
         ArrayList<Double> v2 = new ArrayList<>();
         X = ((-tmplength));
         Y = (0);
-        v2.add(X);
-        v2.add(Y);
-        v2.add(1.0);
+        v2.add(UNIT*X);
+        v2.add(UNIT*Y);
+        v2.add(UNIT);
         ourdots.add(v2);
 
         ArrayList<Double> v5 = new ArrayList<>();
         X = ((-tmplength / 2));
         Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        v5.add(X);
-        v5.add(Y);
-        v5.add(1.0);
+        v5.add(UNIT*X);
+        v5.add(UNIT*Y);
+        v5.add(UNIT);
         ourdots.add(v5);
 
         ArrayList<Double> v6 = new ArrayList<>();
         X = ((tmplength / 2));
         Y = ((-(Math.sqrt(3.0 / 4.0) * tmplength)));
-        v6.add(X);
-        v6.add(Y);
-        v6.add(1.0);
+        v6.add(UNIT*X);
+        v6.add(UNIT*Y);
+        v6.add(UNIT);
         ourdots.add(v6);
 
 

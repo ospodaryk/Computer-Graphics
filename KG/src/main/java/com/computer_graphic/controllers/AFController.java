@@ -137,12 +137,12 @@ public class AFController implements Initializable {
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
         firstRow.add(Math.cos(Math.toRadians(angle)));
-        firstRow.add(-Math.sin(Math.toRadians(angle)));
+        firstRow.add(Math.sin(Math.toRadians(angle)));
         firstRow.add(0.0);
         rotatingSystemMatrix.add(firstRow);
 
         ArrayList<Double> secondRow = new ArrayList<>();
-        secondRow.add((Math.sin(Math.toRadians(angle))));
+        secondRow.add(-(Math.sin(Math.toRadians(angle))));
         secondRow.add(Math.cos(Math.toRadians(angle)));
         secondRow.add(0.0);
         rotatingSystemMatrix.add(secondRow);
@@ -282,11 +282,13 @@ public class AFController implements Initializable {
         ourdots.add(v6);
 
         ArrayList<ArrayList<Double>> matrixtoMove = moveSystemMatrix(centerx.get(), centery.get());
+
         ArrayList<ArrayList<Double>> matrixtoRotate1 = rotateExactHeadSystemMatrix(vx, vy);
         ArrayList<ArrayList<Double>> matrixtoRotate2 = rotatingSystemMatrix(angle);
         ArrayList<ArrayList<Double>> matrixtoRotate3 = rotateBackExactHeadSystemMatrix(vx, vy);
 
         ArrayList<ArrayList<Double>> matrixtoResize = resizeSystemMatrix(index);
+
         ourdots = multiplyMatrix(ourdots, matrixtoResize);
         ourdots = multiplyMatrix(ourdots, matrixtoRotate1);
         ourdots = multiplyMatrix(ourdots, matrixtoRotate2);
@@ -355,6 +357,8 @@ public class AFController implements Initializable {
         ArrayList<ArrayList<Double>> matrixtoMove = moveSystemMatrix(centerx.get(), centery.get());
         ArrayList<ArrayList<Double>> matrixtoRotate = rotatingSystemMatrix(angle);
         ArrayList<ArrayList<Double>> matrixtoResize = resizeSystemMatrix(index);
+
+
         ourdots = multiplyMatrix(ourdots, matrixtoResize);
         ourdots = multiplyMatrix(ourdots, matrixtoRotate);
         ourdots = multiplyMatrix(ourdots, matrixtoMove);
@@ -471,10 +475,7 @@ public class AFController implements Initializable {
         working_Dots.get(5).set(0, corner6.xProperty().get());
         working_Dots.get(5).set(0, corner6.yProperty().get());
         length.set(tmplength / 2 / UNIT*KOEF);
-        System.out.println("===========================");
 
-        System.out.println(length);
-        System.out.println("===========================");
 
 
     }
@@ -551,7 +552,7 @@ public class AFController implements Initializable {
         });
 
         SIZE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
-            System.out.println("NEWX:" + newValue);
+//            System.out.println("NEWX:" + newValue);
 
             length.set(newValue);
             working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
@@ -589,7 +590,7 @@ public class AFController implements Initializable {
             if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
                 working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
             } else {
-                working_Dots = turnDotsArroundExactHead(angle.get(), working_Dots.get(i_index).get(0), working_Dots.get(i_index).get(1), 1);
+                working_Dots = turnDotsArroundExactHead(angle.get(), a,b, 1);
             }
             TurnComboBox.setValue(tmpp);
             setComboBox(working_Dots);
@@ -689,7 +690,7 @@ public class AFController implements Initializable {
     public void drawLines() {
         canvas.getChildren().clear();
 //        canvas.getChildren().add(hexagon);
-        canvas.getChildren().forEach(System.out::println);
+//        canvas.getChildren().forEach(System.out::println);
 
 
         int stepx = 10;
@@ -1188,7 +1189,7 @@ public class AFController implements Initializable {
                         new KeyValue(corner6.yProperty(), our_newx_dot19.get(5).get(1)))
         );
         timeline = timeline2;
-        timeline.setAutoReverse(true);
+        timeline.setAutoReverse(false);
         timeline.setCycleCount(10);
         timeline.play();
 

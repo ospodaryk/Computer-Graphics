@@ -563,6 +563,18 @@ public class AFController implements Initializable {
 
         X.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
 
+
+            double newIm;
+            try{
+                newIm = Double.parseDouble(String.valueOf(newValue));
+            }catch (Exception exception){
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Неправильне введення");
+                errorAlert.setContentText("Потрібнно ввести число. Наприклад: 3.9, 4.4\nЗначення за замовчуванням - 0.0");
+                errorAlert.showAndWait();
+                newValue=0.0;
+            }
+
             SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10+length.get(), 10-length.get() , newValue, 0.1);
             X.setValueFactory(valueFactoryX_2);
 

@@ -31,6 +31,20 @@
 .menub:hover {
   -fx-background-color: #DCDCDC;
 }
+.teor {
+    -fx-background-color: #892D54;
+    -fx-background-radius: 50;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 80px;
+    -fx-font-family: "Times New Roman";
+    -fx-padding: 10 20 10 20;
+}
+
+.teor:hover {
+  -fx-background-color: #55132F;
+}
 
 .start {
     -fx-background-color: #892D54;
@@ -137,7 +151,10 @@
     -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/rgbTheory.png');
     -fx-background-size: 100% 100%;
 }
-
+.hslT{
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/hslTheory.png');
+    -fx-background-size: 100% 100%;
+}
 .afT{
     -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/Aftheory.png');
     -fx-background-size: 100% 100%;

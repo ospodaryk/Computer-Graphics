@@ -15,6 +15,11 @@
                 onAction="#switchToColors" prefHeight="150.0" prefWidth="150.0"
                 style="-fx-background-color: transparent;">
         </Button>
+
+        <Button fx:id="btnToHSL" layoutX="750.0" layoutY="0.0" mnemonicParsing="false" text="HLS"
+                onAction="#switchToHSL" prefHeight="80.0" prefWidth="220.0"
+                styleClass="teor">
+        </Button>
     </children>
 
 </AnchorPane>

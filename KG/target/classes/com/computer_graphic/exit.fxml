@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane maxHeight="910" maxWidth="1280" minHeight="910" minWidth="1280" prefHeight="910.0" prefWidth="1280.0"
+            styleClass="exit"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.computer_graphic.controllers.ExitPageController">
+
+</AnchorPane>

@@ -74,8 +74,8 @@ public class AFController implements Initializable {
     LineTo corner6 = new LineTo();
 
     public ArrayList<ArrayList<Double>> rotateBackExactHeadSystemMatrix(double vx, double vy) {
-        vx -= CANVAS_SIZE+centerx.get()*UNIT;
-        vy -= CANVAS_SIZE-centery.get()*UNIT;
+        vx -= CANVAS_SIZE + centerx.get() * UNIT;
+        vy -= CANVAS_SIZE - centery.get() * UNIT;
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
         firstRow.add(1.0);
@@ -103,8 +103,8 @@ public class AFController implements Initializable {
 
 
     public ArrayList<ArrayList<Double>> rotateExactHeadSystemMatrix(double vx, double vy) {
-        vx -= CANVAS_SIZE+centerx.get()*UNIT;
-        vy -= CANVAS_SIZE-centery.get()*UNIT;
+        vx -= CANVAS_SIZE + centerx.get() * UNIT;
+        vy -= CANVAS_SIZE - centery.get() * UNIT;
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
         ArrayList<Double> firstRow = new ArrayList<>();
@@ -182,6 +182,7 @@ public class AFController implements Initializable {
 
         return rotatingSystemMatrix;
     }
+
     public ArrayList<ArrayList<Double>> moveSystemMatrix(double dx, double dy) {
 
         ArrayList<ArrayList<Double>> rotatingSystemMatrix = new ArrayList<>();
@@ -437,6 +438,24 @@ public class AFController implements Initializable {
     @FXML
     private void startAnimation() throws InterruptedException {
         if (!checkIfMove) {
+            if ((7 - length.get() * Math.abs(resize.get() + 0.5)) < centerx.get()) {
+                centerx.set( (7 - length.get() * Math.abs(resize.get() + 0.5)));
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Координати X були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                errorAlert.showAndWait();
+            }
+
+            SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7+ length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
+            X.setValueFactory(valueFactoryX_2);
+            if ((8 - length.get() * Math.abs(resize.get() + 0.5)) < centery.get()) {
+                centery.set( (8 - length.get() * Math.abs(resize.get() + 0.5)));
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Координати Y були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                errorAlert.showAndWait();
+            }
+            SpinnerValueFactory<Double> valueFactoryY_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-8+ length.get() * Math.abs(resize.get() + 0.1), 8 - length.get() * Math.abs(resize.get() + 0.5), centery.get(), 0.1);
+            Y.setValueFactory(valueFactoryY_2);
+
             draw();
             checkIfMove = true;
         } else {
@@ -474,8 +493,7 @@ public class AFController implements Initializable {
         working_Dots.get(4).set(0, corner5.yProperty().get());
         working_Dots.get(5).set(0, corner6.xProperty().get());
         working_Dots.get(5).set(0, corner6.yProperty().get());
-        length.set(tmplength / 2 / UNIT*KOEF);
-
+        length.set(tmplength / 2 / UNIT * KOEF);
 
 
     }
@@ -508,9 +526,22 @@ public class AFController implements Initializable {
         ANGLE.setValueFactory(valueFactoryANGLE);
         RESIZE.setValueFactory(valueFactoryResize);
 
-        centerx = new AtomicReference<>((double) X.getValue());
+        double tmp;
+        try{
+            tmp = (double) X.getValue();
+        }catch(Exception e){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Неправильне введене X!");
+            errorAlert.setContentText("Потрібнно ввести число. Наприклад: 3, 6\nЗначення за замовчуванням - 0.0");
+            errorAlert.showAndWait();
+            tmp = 0.0;
+            //X.setValueFactory(tmp);
+        }
+
+        centerx = new AtomicReference<>(tmp);
         centery = new AtomicReference<>((double) Y.getValue());
         length = new AtomicReference<>((double) SIZE.getValue());
+        length.set(3.0);
         angle = new AtomicReference<>((double) ANGLE.getValue());
         resize = new AtomicReference<>((double) RESIZE.getValue());
 
@@ -532,7 +563,9 @@ public class AFController implements Initializable {
 
         X.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
 
-            System.out.println("NEWX:" + newValue);
+            SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10+length.get(), 10-length.get() , newValue, 0.1);
+            X.setValueFactory(valueFactoryX_2);
+
             centerx.set(newValue);
             working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
             setHexagon(working_Dots);
@@ -540,112 +573,135 @@ public class AFController implements Initializable {
 
         });
 
-        Y.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
-            System.out.println("NEWX:" + newValue);
-            centery.set(newValue);
-            working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
-            setComboBox(working_Dots);
+        Y.valueProperty().
 
-            setHexagon(working_Dots);
+                addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) ->
+
+                {
+
+                    SpinnerValueFactory<Double> valueFactoryY_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10+length.get(), 10-length.get() , newValue, 0.1);
+                    Y.setValueFactory(valueFactoryY_2);
+
+                    centery.set(newValue);
+                    working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
+                    setComboBox(working_Dots);
+
+                    setHexagon(working_Dots);
 
 
-        });
+                });
 
-        SIZE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
+        SIZE.valueProperty().
+
+                addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) ->
+
+                {
 //            System.out.println("NEWX:" + newValue);
 
-            length.set(newValue);
-            working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
-            setComboBox(working_Dots);
-            setHexagon(working_Dots);
+                    length.set(newValue);
+                    working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
+                    setComboBox(working_Dots);
+                    setHexagon(working_Dots);
 
-        });
-        RESIZE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
+                });
+        RESIZE.valueProperty().
 
-            resize.set(newValue);
+                addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) ->
 
-        });
+                {
 
-        ANGLE.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
+                    resize.set(newValue);
 
-            angle.set(newValue);
-            String str = TurnComboBox.getValue().toString();
-            int start = str.indexOf("(");
-            int end = str.indexOf(")");
-            String outStr = str.substring(start + 2, end - 1);
-            System.out.println(outStr);
-            String[] numbers = outStr.split(" , ");
+                });
 
-            Double a = MapValueToCanvas(Double.parseDouble(numbers[0]));
-            Double b = MapValueToCanvas(Double.parseDouble(numbers[1]));
-            int i_index = 0;
-            for (int i = 0; i < working_Dots.size(); i++) {
-                if ((Objects.equals(a, working_Dots.get(i).get(0))) && (Objects.equals(b, working_Dots.get(i).get(1)))) {
-                    i_index = i;
-                }
-            }
+        ANGLE.valueProperty().
+
+                addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) ->
+
+                {
+
+                    angle.set(newValue);
+                    String str = TurnComboBox.getValue().toString();
+                    int start = str.indexOf("(");
+                    int end = str.indexOf(")");
+                    String outStr = str.substring(start + 2, end - 1);
+                    System.out.println(outStr);
+                    String[] numbers = outStr.split(" , ");
+
+                    Double a = MapValueToCanvas(Double.parseDouble(numbers[0]));
+                    Double b = MapValueToCanvas(Double.parseDouble(numbers[1]));
+                    int i_index = 0;
+                    for (int i = 0; i < working_Dots.size(); i++) {
+                        if ((Objects.equals(a, working_Dots.get(i).get(0))) && (Objects.equals(b, working_Dots.get(i).get(1)))) {
+                            i_index = i;
+                        }
+                    }
 
 
-            String tmpp = TurnComboBox.getValue().toString();
-            if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
-                working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
-            } else {
-                working_Dots = turnDotsArroundExactHead(angle.get(), a,b, 1);
-            }
-            TurnComboBox.setValue(tmpp);
-            setComboBox(working_Dots);
-            TurnComboBox.setValue(tmpp);
-            setHexagon(working_Dots);
+                    String tmpp = TurnComboBox.getValue().toString();
+                    if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
+                        working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
+                    } else {
+                        working_Dots = turnDotsArroundExactHead(angle.get(), a, b, 1);
+                    }
+                    TurnComboBox.setValue(tmpp);
+                    setComboBox(working_Dots);
+                    TurnComboBox.setValue(tmpp);
+                    setHexagon(working_Dots);
 
-        });
+                });
         sliderUNIX.setBlockIncrement(1);
         sliderUNIX.setMax(4);
         sliderUNIX.setMin(1);
         sliderUNIX.setValue(1);
         sliderUNIX.setMajorTickUnit(1);
         sliderUNIX.setMinorTickCount(1);
-        sliderUNIX.valueProperty().addListener((obs, oldValue, newValue) -> {
+        sliderUNIX.valueProperty().
+
+                addListener((obs, oldValue, newValue) ->
+
+                {
 
 
-            canvas.getChildren().removeAll();
-            hexagon.getPoints().removeAll();
-            hexagon.getPoints().clear();
-            KOEF = newValue.intValue();
-            boolean check = false;
+                    canvas.getChildren().removeAll();
+                    hexagon.getPoints().removeAll();
+                    hexagon.getPoints().clear();
+                    KOEF = newValue.intValue();
+                    boolean check = false;
 
-            if (checkIfMove) {
-                timeline.stop();
-                hexagon.getPoints().removeAll();
-                hexagon.getPoints().clear();
-                hexagon.getPoints().addAll(corner1.xProperty().get(), corner1.yProperty().get(),
-                        corner2.xProperty().get(), corner2.yProperty().get(),
-                        corner3.xProperty().get(), corner3.yProperty().get(),
-                        corner4.xProperty().get(), corner4.yProperty().get(),
-                        corner5.xProperty().get(), corner5.yProperty().get(),
-                        corner6.xProperty().get(), corner6.yProperty().get()
-                );
-                canvas.getChildren().add(hexagon);
-            }
-            sliderUNIX.setValue(newValue.intValue());
+                    if (checkIfMove) {
+                        timeline.stop();
+                        hexagon.getPoints().removeAll();
+                        hexagon.getPoints().clear();
+                        hexagon.getPoints().addAll(corner1.xProperty().get(), corner1.yProperty().get(),
+                                corner2.xProperty().get(), corner2.yProperty().get(),
+                                corner3.xProperty().get(), corner3.yProperty().get(),
+                                corner4.xProperty().get(), corner4.yProperty().get(),
+                                corner5.xProperty().get(), corner5.yProperty().get(),
+                                corner6.xProperty().get(), corner6.yProperty().get()
+                        );
+                        canvas.getChildren().add(hexagon);
+                    }
+                    sliderUNIX.setValue(newValue.intValue());
 
 
-            drawLines();
-            textSlider.setText(String.format("%d", newValue.intValue()));
-            working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
+                    drawLines();
+                    textSlider.setText(String.format("%d", newValue.intValue()));
+                    working_Dots = findDotsWhenTurnAroundCenter(angle.get(), 1);
 
-            hexagon.getPoints().addAll(working_Dots.get(0).get(0), working_Dots.get(0).get(1),
-                    working_Dots.get(1).get(0), working_Dots.get(1).get(1),
-                    working_Dots.get(2).get(0), working_Dots.get(2).get(1),
-                    working_Dots.get(3).get(0), working_Dots.get(3).get(1),
-                    working_Dots.get(4).get(0), working_Dots.get(4).get(1),
-                    working_Dots.get(5).get(0), working_Dots.get(5).get(1)
-            );
+                    hexagon.getPoints().addAll(working_Dots.get(0).get(0), working_Dots.get(0).get(1),
+                            working_Dots.get(1).get(0), working_Dots.get(1).get(1),
+                            working_Dots.get(2).get(0), working_Dots.get(2).get(1),
+                            working_Dots.get(3).get(0), working_Dots.get(3).get(1),
+                            working_Dots.get(4).get(0), working_Dots.get(4).get(1),
+                            working_Dots.get(5).get(0), working_Dots.get(5).get(1)
+                    );
 
-            canvas.getChildren().add(hexagon);
-            if (checkIfMove) {
-                draw();
-            }
-        });
+                    canvas.getChildren().add(hexagon);
+                    if (checkIfMove) {
+                        draw();
+                    }
+                });
 
     }
 
@@ -663,6 +719,16 @@ public class AFController implements Initializable {
         TurnComboBox.setItems(ourlist);
 
 
+    }
+
+    @FXML
+    private void backToMain() throws IOException {
+        App.setRoot("main");
+    }
+
+    @FXML
+    private void goToTheory() throws IOException {
+        App.setRoot("afTheory");
     }
 
 
@@ -772,13 +838,13 @@ public class AFController implements Initializable {
 
         }
 
-        double increase=resize.get();
+        double increase = resize.get();
 
 
         if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
-            double size =1;
+            double size = 1;
 
-            double stepSize =(increase- size)/10;
+            double stepSize = (increase - size) / 10;
             our_newx_dots = findDotsWhenTurnAroundCenter(startangle, size);
             size += stepSize;
             startangle += step;
@@ -1245,6 +1311,7 @@ public class AFController implements Initializable {
 
 
 }
+
 
 
 

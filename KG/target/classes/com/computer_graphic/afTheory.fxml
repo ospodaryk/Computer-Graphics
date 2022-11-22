@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="910" maxWidth="1280" minHeight="910" minWidth="1280" prefHeight="910.0" prefWidth="1280.0"
+            styleClass="afT" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.computer_graphic.controllers.AFTheoryController">
+    <children>
+        <Button fx:id="btnToAF" layoutX="1100.0" layoutY="700.0" mnemonicParsing="false"
+                onAction="#switchToAF" prefHeight="150.0" prefWidth="150.0"
+                style="-fx-background-color: transparent;">
+        </Button>
+    </children>
+
+</AnchorPane>

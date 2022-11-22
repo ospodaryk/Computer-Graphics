@@ -10,16 +10,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:16" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac:16" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:16" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:mac:16" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:13.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:mac:13.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:13.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac:13.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:13.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac:13.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:win:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:19" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.8" level="project" />
     <orderEntry type="library" name="Maven: com.jtransc:jtransc-rt:0.5.0-ALPHA4" level="project" />
     <orderEntry type="library" name="Maven: com.jtransc:jtransc-rt-core:0.5.0-ALPHA4" level="project" />

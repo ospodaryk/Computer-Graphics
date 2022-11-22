@@ -24,18 +24,23 @@
                 <VBox alignment="CENTER" layoutX="28.0" layoutY="150.0"/>
                 <VBox alignment="CENTER" layoutX="32.0" layoutY="84.0"/>
 
-                <Button fx:id="btnSave" layoutX="1100.0" layoutY="215.0" mnemonicParsing="false"
-                        onAction="#saveCanvasToFile" prefHeight="30.0" prefWidth="150.0"
-                        style="-fx-background-color: #FEC33B;" text="Зберегти">
-                    <font>
-                        <Font name="Times New Roman Regular" size="20.0"/>
-                    </font>
+                <Button fx:id="btnSave" layoutX="1090.0" layoutY="215.0" mnemonicParsing="false"
+                        onAction="#saveCanvasToFile" prefHeight="30.0" prefWidth="170.0"
+                        styleClass="shiny-orange2" text="Зберегти">
                 </Button>
-                <Button fx:id="btnOpen" layoutX="1100.0" layoutY="300.0" mnemonicParsing="false" onAction="#chooseImage"
-                        prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FEC33B;" text="Обрати фото">
-                    <font>
-                        <Font name="Times New Roman Regular" size="20.0"/>
-                    </font>
+
+                <Button fx:id="btnOpen" layoutX="1090.0" layoutY="300.0" mnemonicParsing="false" onAction="#chooseImage"
+                        prefHeight="30.0" prefWidth="170.0" styleClass="shiny-orange2" text="Обрати фото">
+                </Button>
+
+                <Button fx:id="btnToMenu" layoutX="1100.0" layoutY="700.0" mnemonicParsing="false"
+                        onAction="#backToMain" prefHeight="150.0" prefWidth="170.0"
+                        style="-fx-background-color: transparent;">
+                </Button>
+
+
+                <Button fx:id="btnToTheory" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#goToTheory"
+                        prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;">
                 </Button>
 
                 <Text layoutX="700.0" layoutY="480.0" text="HSL" textAlignment="CENTER" wrappingWidth="250">

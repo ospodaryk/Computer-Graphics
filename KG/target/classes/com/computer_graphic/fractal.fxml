@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.paint.Color?>
+<AnchorPane maxHeight="910" maxWidth="1280" minHeight="910" minWidth="1280" prefHeight="910.0" prefWidth="1280.0"
+            styleClass="fractal" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.computer_graphic.controllers.FractalController">
+
+    <children>
+        <AnchorPane prefHeight="450.0" prefWidth="192.0">
+            <children>
+
+                <Button fx:id="btnToTheory" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#goToTheory"
+                        prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;">
+                </Button>
+                <Button fx:id="btnToMenu" layoutX="1100.0" layoutY="700.0" mnemonicParsing="false"
+                        onAction="#backToMain" prefHeight="150.0" prefWidth="150.0"
+                        style="-fx-background-color: transparent;">
+                </Button>
+
+
+                <Group layoutX="25.0" layoutY="99.0"/>
+                <ColorPicker fx:id="fractalColorPicker1" layoutX="880.0" layoutY="370.0" prefHeight="30.0" prefWidth="60.0">
+                    <value>
+                        <Color blue="0.0" green="0.0" red="1.0" />
+                    </value>
+                </ColorPicker>
+                <ColorPicker fx:id="fractalColorPicker2" layoutX="960.0" layoutY="370.0" prefHeight="30.0" prefWidth="60.0">
+                    <value>
+                        <Color blue="0.0" green="1.0" red="0.0" />
+                    </value>
+                </ColorPicker>
+                <ColorPicker fx:id="fractalColorPicker3" layoutX="1040.0" layoutY="370.0" prefHeight="30.0" prefWidth="60.0">
+                    <value>
+                        <Color blue="1.0" green="0.0" red="0.0" />
+                    </value>
+                </ColorPicker>
+                <ColorPicker fx:id="fractalColorPicker4" layoutX="1120.0" layoutY="370.0" prefHeight="30.0" prefWidth="60.0">
+                    <value>
+                        <Color blue="1.0" green="1.0" red="0.0" />
+                    </value>
+                </ColorPicker>
+                <VBox alignment="CENTER" layoutX="720.0" layoutY="250.0">
+                    <children>
+                        <HBox alignment="CENTER">
+                            <children>
+                                <TextField fx:id="cRe" prefHeight="50.0" prefWidth="70.0" promptText="Re" text="1.0"/>
+                                <Label text="  +  "/>
+                                <TextField fx:id="cIm" prefHeight="50.0" prefWidth="70.0" promptText="Im" text="1.0"/>
+                                <Label text="i"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="350.0" layoutX="600.0" layoutY="410.0" style="-fx-background-color: #000000;"
+                   pickOnBounds="true" preserveRatio="true" />
+        <Canvas fx:id="canvas" height="320.0" layoutX="212.0" layoutY="65.0" width="480.0"/>
+        <Text fx:id="textSlider" layoutX="600.0" layoutY="800.0" text="Масштаб: 50%" wrappingWidth="300">
+            <font>
+                <Font name="Times New Roman Bold" size="24.0"/>
+            </font>
+        </Text>
+        <Slider fx:id="stepSlider" layoutX="600.0" layoutY="820.0" max="100.0" min="0.1" prefHeight="16.0"
+                prefWidth="447.0" showTickMarks="true" value="50.0" blockIncrement="1.0"/>
+
+        <RadioButton fx:id="k3" layoutX="900.0" layoutY="250.0" style="-fx-font-size:36px;"/>
+        <RadioButton fx:id="k4" layoutX="1100.0" layoutY="250.0" style="-fx-font-size:36px;"/>
+
+
+        <Text layoutX="985.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Кількість ітерацій:" textAlignment="LEFT" wrappingWidth="300">
+            <font>
+                <Font name="Times New Roman BOLD" size="24.0"/>
+            </font>
+        </Text>
+        <Spinner id="X" fx:id="iterations" editable="true" layoutX="1050.0" layoutY="530.0" prefHeight="50.0" prefWidth="120.0"  amountToStepBy="0.0001"/>
+    </children>
+</AnchorPane>
+

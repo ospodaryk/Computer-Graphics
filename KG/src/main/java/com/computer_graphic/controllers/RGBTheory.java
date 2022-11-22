@@ -16,3 +16,4 @@ public class RGBTheory {
     private void switchToHSL() throws IOException {
         App.setRoot("hslTheory");
     }
+}

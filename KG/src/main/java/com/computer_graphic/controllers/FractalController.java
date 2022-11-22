@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.computer_graphic.Complex.arg;
 
@@ -41,6 +42,7 @@ public class FractalController implements Initializable {
 
     @FXML
     public TextField cIm;
+    public TextField iterations;
 
     @FXML
     public Slider stepSlider;
@@ -159,40 +161,64 @@ public class FractalController implements Initializable {
         k3.setSelected(true);
         Complex num = new Complex(1, 1);
 
-        System.out.println(num);
-        int iteration = 30;
-        final double[] pxl = {1};
-        imageView.setImage(fractionPixelSet4(num, 1, pxl[0]));
+        AtomicInteger iteration = new AtomicInteger(30);
+
+        iterations.setText("30");
+
+        final double[] pxl = {0.02};
+
+        imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
         fractalColorPicker1.setOnAction(e -> {
             fractal.setColorSchema(fractalColorPicker1.getValue());
             if (k3.isSelected()) {
-                imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
             } else {
-                imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
             }
         });
+
+        iterations.setOnAction(e -> {
+            Integer tmp;
+            try{
+                tmp = Integer.parseInt(iterations.getText());
+            }catch (Exception exception){
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Неправильне введена кількість ітерацій!");
+                errorAlert.setContentText("Потрібнно ввести ціле число. Наприклад: 3, 6, 30\nЗначення за замовчуванням - 30");
+                errorAlert.showAndWait();
+                tmp = 30;
+                iterations.setText("30");
+            }
+            iteration.set(tmp);
+            if (k3.isSelected()) {
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
+            } else {
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
+            }
+        });
+
         fractalColorPicker2.setOnAction(e -> {
             fractal.setColorSchema(fractalColorPicker2.getValue());
             if (k3.isSelected()) {
-                imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
             } else {
-                imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
             }
         });
         fractalColorPicker3.setOnAction(e -> {
             fractal.setColorSchema(fractalColorPicker3.getValue());
             if (k3.isSelected()) {
-                imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
             } else {
-                imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
             }
         });
         fractalColorPicker4.setOnAction(e -> {
             fractal.setColorSchema(fractalColorPicker4.getValue());
             if (k3.isSelected()) {
-                imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
             } else {
-                imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
             }
         });
         k3.setOnAction(e -> {
@@ -200,14 +226,14 @@ public class FractalController implements Initializable {
 
             num.setRe(Double.parseDouble(cRe.getText()));
             num.setIm(Double.parseDouble(cIm.getText()));
-            imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+            imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
         });
 
         k4.setOnAction(e -> {
             fractalColorPicker4.setLayoutX(1120);
             num.setRe(Double.parseDouble(cRe.getText()));
             num.setIm(Double.parseDouble(cIm.getText()));
-            imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+            imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
         });
 
         cRe.setOnAction(e -> {
@@ -224,9 +250,9 @@ public class FractalController implements Initializable {
             }
             num.setRe(newRe);
             if (k3.isSelected()) {
-                imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
             } else {
-                imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
             }
         });
 
@@ -244,9 +270,9 @@ public class FractalController implements Initializable {
             }
             num.setIm(newIm);
             if (k3.isSelected()) {
-                imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
             } else {
-                imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
             }
         });
 
@@ -254,9 +280,9 @@ public class FractalController implements Initializable {
             textSlider.setText(String.format("Масштаб: %d%%", newValue.intValue()));
             pxl[0] = 1.0 / Double.parseDouble(newValue.toString());
             if (k3.isSelected()) {
-                imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet3(num, iteration.get(), pxl[0]));
             } else {
-                imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
+                imageView.setImage(fractionPixelSet4(num, iteration.get(), pxl[0]));
             }
 
         });

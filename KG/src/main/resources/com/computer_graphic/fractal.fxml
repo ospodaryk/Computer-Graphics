@@ -62,16 +62,16 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="350.0" layoutX="600.0" layoutY="410.0" style="-fx-background-color: #000000;"
+        <ImageView fx:id="imageView" fitHeight="400.0" fitWidth="400.0" layoutX="550.0" layoutY="410.0" style="-fx-background-color: #000000;"
                    pickOnBounds="true" preserveRatio="true" />
         <Canvas fx:id="canvas" height="320.0" layoutX="212.0" layoutY="65.0" width="480.0"/>
-        <Text fx:id="textSlider" layoutX="600.0" layoutY="800.0" text="Масштаб: 50%" wrappingWidth="300">
+        <Text fx:id="textSlider" layoutX="985.0" layoutY="620.0" text="Масштаб: 50%" wrappingWidth="300">
             <font>
                 <Font name="Times New Roman Bold" size="24.0"/>
             </font>
         </Text>
-        <Slider fx:id="stepSlider" layoutX="600.0" layoutY="820.0" max="100.0" min="0.1" prefHeight="16.0"
-                prefWidth="447.0" showTickMarks="true" value="50.0" blockIncrement="1.0"/>
+        <Slider fx:id="stepSlider" layoutX="985.0" layoutY="650.0" max="100.0" min="0.1" prefHeight="16.0"
+                prefWidth="200.0" showTickMarks="true" value="50.0" blockIncrement="1.0"/>
 
         <RadioButton fx:id="k3" layoutX="900.0" layoutY="250.0" style="-fx-font-size:36px;"/>
         <RadioButton fx:id="k4" layoutX="1100.0" layoutY="250.0" style="-fx-font-size:36px;"/>
@@ -82,7 +82,7 @@
                 <Font name="Times New Roman BOLD" size="24.0"/>
             </font>
         </Text>
-        <Spinner id="X" fx:id="iterations" editable="true" layoutX="1050.0" layoutY="530.0" prefHeight="50.0" prefWidth="120.0"  amountToStepBy="0.0001"/>
+        <TextField id="X" fx:id="iterations" editable="true" layoutX="1050.0" layoutY="530.0" prefHeight="50.0" prefWidth="120.0"/>
     </children>
 </AnchorPane>
 

@@ -71,14 +71,14 @@
                 prefHeight="70.0" prefWidth="450.0" showTickMarks="true"/>
         <Text fx:id="lightnessText" layoutX="460.0" layoutY="780.0" text="Яскравість: 0%" wrappingWidth="300">
             <font>
-                <Font name="Times New Roman Bold" size="24.0"/>
+                <Font name="Times New Roman Bold" size="30.0"/>
             </font>
         </Text>
         <Canvas fx:id="colorCanvas" height="100.0" layoutX="600.0" layoutY="480.0" width="100.0"/>
         <Canvas fx:id="rectangleCanvas" height="70.0" layoutX="120.0" layoutY="300.0" width="70.0"/>
         <Text layoutX="460.0" layoutY="640.0" text="Працювати з:" textAlignment="CENTER" wrappingWidth="200">
             <font>
-                <Font name="Times New Roman Bold" size="24.0"/>
+                <Font name="Times New Roman Bold" size="30.0"/>
             </font>
         </Text>
         <ComboBox fx:id="colorsComboBox" layoutX="460.0" layoutY="660.0"  prefHeight="40.0"  prefWidth="450.0"  styleClass="combo-box-popup ">

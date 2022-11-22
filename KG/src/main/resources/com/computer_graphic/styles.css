@@ -9,7 +9,7 @@
     -fx-background-insets: 0,1,2,3,0;
     -fx-text-fill: #000000;
     -fx-font-weight: bold;
-    -fx-font-size: 35px;
+    -fx-font-size: 45px;
     -fx-font-family: "Times New Roman";
     -fx-padding: 10 20 10 20;
 }
@@ -23,7 +23,7 @@
     -fx-background-insets: 0,1,2,3,0;
     -fx-text-fill: #8CD3E7;
     -fx-font-weight: bold;
-    -fx-font-size: 35px;
+    -fx-font-size: 45px;
     -fx-font-family: "Times New Roman";
     -fx-padding: 10 20 10 20;
 }
@@ -97,54 +97,54 @@
 }
 
 .first_page{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/first.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/first.png');
     -fx-background-size: 100% 100%;
 }
 
 .anchor {
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/background2.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/background2.png');
     -fx-background-size: 100% 100%;
 }
 
 .m{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/menu.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/menu.png');
     -fx-background-size: 100% 100%;
 
 }
 
 .fractal{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/fractal.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/fractal.png');
     -fx-background-size: 100% 100%;
 
 }
 
 .af{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/af.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/af.png');
     -fx-background-size: 100% 100%;
 }
 
 .exit{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/exit.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/exit.png');
     -fx-background-size: 100% 100%;
 }
 
 .fractalT{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/rgbTheory.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/FTheory.png');
     -fx-background-size: 100% 100%;
 }
 
 .rgbT{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/rgbTheory.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/rgbTheory.png');
     -fx-background-size: 100% 100%;
 }
 
 .afT{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/Aftheory.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/Aftheory.png');
     -fx-background-size: 100% 100%;
 }
 
 .markings{
-    -fx-background-image:url('file:/Users/Dariia_Martyniuk/Downloads/Computer-Graphics-main/Computer-Graphics-main/KG/src/main/resources/com/computer_graphic/img/first.png');
+    -fx-background-image:url('file:/Users/oksanaspodarik/Documents/KG/Computer-Graphics/KG/src/main/resources/com/computer_graphic/img/yp.png');
     -fx-background-size: 100% 100%;
 }
 

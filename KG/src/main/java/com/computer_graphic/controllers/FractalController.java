@@ -156,13 +156,14 @@ public class FractalController implements Initializable {
         ToggleGroup toggleGroup = new ToggleGroup();
         k3.setToggleGroup(toggleGroup);
         k4.setToggleGroup(toggleGroup);
-        k4.setSelected(true);
+        k3.setSelected(true);
         Complex num = new Complex(1, 1);
 
         System.out.println(num);
         int iteration = 3;
         final double[] pxl = {1};
         imageView.setImage(fractionPixelSet4(num, 1, pxl[0]));
+
         fractalColorPicker1.setOnAction(e -> {
             fractal.setColorSchema(fractalColorPicker1.getValue());
             if (k3.isSelected()) {
@@ -196,12 +197,15 @@ public class FractalController implements Initializable {
             }
         });
         k3.setOnAction(e -> {
+            fractalColorPicker4.setLayoutX(6120);
+
             num.setRe(Double.parseDouble(cRe.getText()));
             num.setIm(Double.parseDouble(cIm.getText()));
             imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
         });
 
         k4.setOnAction(e -> {
+            fractalColorPicker4.setLayoutX(1120);
             num.setRe(Double.parseDouble(cRe.getText()));
             num.setIm(Double.parseDouble(cIm.getText()));
             imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));

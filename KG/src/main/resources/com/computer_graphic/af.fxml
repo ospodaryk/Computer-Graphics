@@ -105,7 +105,7 @@
                         layoutX="985.0" layoutY="585.0" prefWidth="250.0"
                 />
                 <Button fx:id="btnDraw" layoutX="600.0" layoutY="850.0" mnemonicParsing="false" onAction="#saveCanvasToFile"
-                        prefHeight="40.0" prefWidth="245.0" styleClass="shiny-orange2" text="Зберегти">
+                        prefHeight="50" prefWidth="245.0" styleClass="start" text="Зберегти">
                 </Button>
 
                 <Button fx:id="btnToMenu" layoutX="1100.0" layoutY="700.0" mnemonicParsing="false"
@@ -120,13 +120,13 @@
 
 
                 <Button fx:id="btnstart" layoutX="450.0" layoutY="650.0" mnemonicParsing="false" onAction="#startAnimation"
-                        prefHeight="40.0" prefWidth="245.0" styleClass="shiny-orange2" text="Почати анімацію">
+                        prefHeight="50.0" prefWidth="245.0" styleClass="shiny-orange2" text="Почати анімацію">
                     <font>
                         <Font name="Times New Roman" size="24.0"/>
                     </font>
                 </Button>
                 <Button fx:id="btnstop" layoutX="700.0" layoutY="650.0" mnemonicParsing="false" onAction="#stopAnimation"
-                        prefHeight="40.0" prefWidth="245.0" styleClass="shiny-orange2" text="Зупинити анімацію">
+                        prefHeight="50.0" prefWidth="245.0" styleClass="shiny-orange2" text="Зупинити анімацію">
                     <font>
                         <Font name="Times New Roman" size="24.0"/>
                     </font>

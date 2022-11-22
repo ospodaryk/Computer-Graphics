@@ -11,21 +11,24 @@
     <children>
 
 
-        <Button fx:id="btnFractal" layoutX="377.0" layoutY="212.0" mnemonicParsing="false"
+
+
+
+        <Button fx:id="btnFractal" layoutX="380.0" layoutY="250.0" mnemonicParsing="false"
                 onAction="#switchToFractal"
                 prefHeight="120.0" prefWidth="525.0" styleClass="menu" text="Фрактали Ньютона">
         </Button>
 
-        <Button fx:id="btnColors" layoutX="377.0" layoutY="380.0" mnemonicParsing="false"
+        <Button fx:id="btnColors" layoutX="380.0" layoutY="400.0" mnemonicParsing="false"
                 onAction="#switchToColors"
                 prefHeight="120.0" prefWidth="525.0" styleClass="menu" text="Кольорові моделі">
         </Button>
-        <Button fx:id="btnAF" layoutX="377.0" layoutY="558.0" mnemonicParsing="false"
+        <Button fx:id="btnAF" layoutX="380.0" layoutY="550.0" mnemonicParsing="false"
                 onAction="#switchToAF"
                 prefHeight="120.0" prefWidth="525.0" styleClass="menu" text="Афінні перетворення">
         </Button>
 
-        <Button fx:id="btnExit" layoutX="377.0" layoutY="755.0" mnemonicParsing="false"
+        <Button fx:id="btnExit" layoutX="380.0" layoutY="700.0" mnemonicParsing="false"
                 onAction="#exit"
                 prefHeight="120.0" prefWidth="525.0" styleClass="menub" text="Вийти">
         </Button>

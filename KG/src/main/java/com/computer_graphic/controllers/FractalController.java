@@ -160,7 +160,7 @@ public class FractalController implements Initializable {
         Complex num = new Complex(1, 1);
 
         System.out.println(num);
-        int iteration = 3;
+        int iteration = 30;
         final double[] pxl = {1};
         imageView.setImage(fractionPixelSet4(num, 1, pxl[0]));
         fractalColorPicker1.setOnAction(e -> {

@@ -5,16 +5,10 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
-public class RGBTheory {
+public class HSLTheoryController {
 
     @FXML
     private void switchToColors() throws IOException {
         App.setRoot("colors");
     }
-
-    @FXML
-    private void switchToHSL() throws IOException {
-        App.setRoot("hslTheory");
-    }
-
 }

@@ -156,7 +156,7 @@ public class FractalController implements Initializable {
         ToggleGroup toggleGroup = new ToggleGroup();
         k3.setToggleGroup(toggleGroup);
         k4.setToggleGroup(toggleGroup);
-        k4.setSelected(true);
+        k3.setSelected(true);
         Complex num = new Complex(1, 1);
 
         System.out.println(num);
@@ -196,12 +196,15 @@ public class FractalController implements Initializable {
             }
         });
         k3.setOnAction(e -> {
+            fractalColorPicker4.setLayoutX(6120);
+
             num.setRe(Double.parseDouble(cRe.getText()));
             num.setIm(Double.parseDouble(cIm.getText()));
             imageView.setImage(fractionPixelSet3(num, iteration, pxl[0]));
         });
 
         k4.setOnAction(e -> {
+            fractalColorPicker4.setLayoutX(1120);
             num.setRe(Double.parseDouble(cRe.getText()));
             num.setIm(Double.parseDouble(cIm.getText()));
             imageView.setImage(fractionPixelSet4(num, iteration, pxl[0]));
@@ -261,107 +264,4 @@ public class FractalController implements Initializable {
 
     }
 
-    /*private void paintSet(GraphicsContext ctx, FractalBean fractal) {
-        double precision = Math.max((fractal.getReMax() - fractal.getReMin()) / CANVAS_WIDTH, (fractal.getImMax() - fractal.getImMin()) / CANVAS_HEIGHT);
-
-        double convergenceValue;
-        int fractalConvergenceSteps = fractal.getConvergenceSteps();
-        for (double c = fractal.getReMin(), xR = 0; xR < CANVAS_WIDTH; c = c + precision, xR++) {
-            for (double ci = fractal.getImMin(), yR = 0; yR < CANVAS_HEIGHT; ci = ci + precision, yR++) {
-                if (fractal.isIsMandelbrot()) {
-                    convergenceValue = FractalBean.checkConvergence(ci, c, 0, 0, fractalConvergenceSteps);
-                } else {
-                    convergenceValue = FractalBean.checkConvergence(fractal.getZi(), fractal.getZ(), ci, c, fractalConvergenceSteps);
-                }
-                double t = convergenceValue / fractalConvergenceSteps;
-
-                ctx.setFill(convergenceValue != fractalConvergenceSteps ? fractal.getColorSchema(t) : fractal.getConvergenceColor());
-                ctx.fillRect(xR, yR, 1, 1);
-            }
-        }
-    }
-
-
-    @FXML
-    private synchronized void draw() {
-        paintSet(canvas.getGraphicsContext2D(), fractal);
-    }
-
-    @FXML
-    private void backToMain() throws IOException {
-        App.setRoot("main");
-    }
-
-    @FXML
-    private synchronized void moveFractal(KeyEvent ke) {
-        switch (ke.getCode().toString()) {
-            case "D": {
-                fractal.moveRight(0.2);
-                break;
-            }
-            case "A": {
-                fractal.moveRight(-0.2);
-                break;
-            }
-            case "S": {
-                fractal.moveUp(0.2);
-                break;
-            }
-            case "W": {
-                fractal.moveUp(-0.2);
-                break;
-            }
-            case "ADD": {
-                fractal.zoom(1 / 1.5);
-                break;
-            }
-            case "SUBTRACT": {
-                fractal.zoom(1.5);
-                break;
-            }
-            default: {
-                return;
-            }
-        }
-        draw();
-    }
-
-    @FXML
-    private void saveCanvasToFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save File");
-        File file = fileChooser.showSaveDialog(new Stage());
-
-        if (file != null) {
-            try {
-                WritableImage writableImage = new WritableImage(CANVAS_WIDTH, CANVAS_HEIGHT);
-                canvas.snapshot(null, writableImage);
-                RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-                ImageIO.write(renderedImage, "png", file);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }*/
-
-    /*@Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        cRe.textProperty().addListener((observable, oldValue, newValue) -> {
-            fractal.setZ(Double.parseDouble(newValue));
-            draw();
-        });
-        cIm.textProperty().addListener((observable, oldValue, newValue) -> {
-            fractal.setZi(Double.parseDouble(newValue));
-            fractalColorPicker1();
-        });
-        stepSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            fractal.setConvergenceSteps(newValue.intValue());
-            draw();
-        });
-        fractalColorPicker1.setOnAction(e -> {
-            fractal.setColorSchema(fractalColorPicker1.getValue());
-            draw();
-        });
-        draw();
-    }*/
 }

@@ -24,13 +24,13 @@
                 <VBox alignment="CENTER" layoutX="28.0" layoutY="150.0"/>
                 <VBox alignment="CENTER" layoutX="32.0" layoutY="84.0"/>
 
-                <Button fx:id="btnSave" layoutX="1090.0" layoutY="215.0" mnemonicParsing="false"
-                        onAction="#saveCanvasToFile" prefHeight="30.0" prefWidth="170.0"
+                <Button fx:id="btnSave" layoutX="1090.0" layoutY="225.0" mnemonicParsing="false"
+                        onAction="#saveCanvasToFile" prefHeight="40.0" prefWidth="170.0"
                         styleClass="shiny-orange2" text="Зберегти">
                 </Button>
 
                 <Button fx:id="btnOpen" layoutX="1090.0" layoutY="300.0" mnemonicParsing="false" onAction="#chooseImage"
-                        prefHeight="30.0" prefWidth="170.0" styleClass="shiny-orange2" text="Обрати фото">
+                        prefHeight="40.0" prefWidth="170.0" styleClass="shiny-orange2" text="Обрати фото">
                 </Button>
 
                 <Button fx:id="btnToMenu" layoutX="1100.0" layoutY="700.0" mnemonicParsing="false"

@@ -7,12 +7,16 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="450" maxWidth="720" minHeight="450" minWidth="720" prefHeight="450.0" prefWidth="720.0"
-            styleClass="rgbT" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            styleClass="hslT" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.computer_graphic.controllers.HSLTheoryController">
     <children>
         <Button fx:id="btnToColors" layoutX="1100.0" layoutY="700.0" mnemonicParsing="false"
                 onAction="#switchToColors" prefHeight="150.0" prefWidth="150.0"
                 style="-fx-background-color: transparent;">
+        </Button>
+        <Button fx:id="btnToRGB" layoutX="600.0" layoutY="0.0" mnemonicParsing="false" text="RGB"
+                onAction="#switchToRGB" prefHeight="80.0" prefWidth="220.0"
+                styleClass="teor">
         </Button>
     </children>
 

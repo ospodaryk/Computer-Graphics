@@ -11,4 +11,10 @@ public class HSLTheoryController {
     private void switchToColors() throws IOException {
         App.setRoot("colors");
     }
+
+
+    @FXML
+    private void switchToRGB() throws IOException {
+        App.setRoot("rgbTheory");
+    }
 }

@@ -104,7 +104,7 @@
                         value="1.0"
                         layoutX="985.0" layoutY="585.0" prefWidth="250.0"
                 />
-                <Button fx:id="btnDraw" layoutX="600.0" layoutY="845.0" mnemonicParsing="false" onAction="#saveCanvasToFile"
+                <Button fx:id="btnDraw" layoutX="600.0" layoutY="840.0" mnemonicParsing="false" onAction="#saveCanvasToFile"
                         prefHeight="50" prefWidth="245.0" styleClass="start" text="Зберегти">
                 </Button>
 

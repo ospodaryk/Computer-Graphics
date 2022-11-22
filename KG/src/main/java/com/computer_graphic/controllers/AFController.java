@@ -438,23 +438,92 @@ public class AFController implements Initializable {
     @FXML
     private void startAnimation() throws InterruptedException {
         if (!checkIfMove) {
-            if ((7 - length.get() * Math.abs(resize.get() + 0.5)) < centerx.get()) {
-                centerx.set( (7 - length.get() * Math.abs(resize.get() + 0.5)));
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Координати X були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
-                errorAlert.showAndWait();
+            String str = TurnComboBox.getValue().toString();
+            int start = str.indexOf("(");
+            int end = str.indexOf(")");
+            String outStr = str.substring(start + 2, end - 1);
+            System.out.println(outStr);
+            String[] numbers = outStr.split(" , ");
+
+
+            int startangle = 0;
+            int step = 20;
+            Double a = MapValueToCanvas(Double.parseDouble(numbers[0]));
+            Double b = MapValueToCanvas(Double.parseDouble(numbers[1]));
+
+            if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
+                if (((7 - length.get() / 2 * Math.abs(resize.get() + 0.5)) < centerx.get())) {
+                    centerx.set((7 - length.get() / 2 * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати X були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7 + length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
+                    X.setValueFactory(valueFactoryX_2);
+                }
+                if (((-7 + length.get() / 2 * Math.abs(resize.get() + 0.5)) < centerx.get())) {
+                    centerx.set((-7 + length.get() / 2 * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати X були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7 + length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
+                    X.setValueFactory(valueFactoryX_2);
+                }
+            } else {
+                if ((7 - length.get() * Math.abs(resize.get() + 0.5)) < centerx.get()) {
+                    centerx.set((7 - length.get() * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати X були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7 + length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
+                    X.setValueFactory(valueFactoryX_2);
+                }
+                if ((-7 + length.get() * Math.abs(resize.get() + 0.5)) < centerx.get()) {
+                    centerx.set((-7 + length.get() * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати X були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7 + length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
+                    X.setValueFactory(valueFactoryX_2);
+                }
             }
 
-            SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7+ length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
-            X.setValueFactory(valueFactoryX_2);
-            if ((8 - length.get() * Math.abs(resize.get() + 0.5)) < centery.get()) {
-                centery.set( (8 - length.get() * Math.abs(resize.get() + 0.5)));
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Координати Y були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
-                errorAlert.showAndWait();
+
+            if (Objects.equals(valueFromComboBox, TurnComboBox.getItems().get(6).toString())) {
+                if ((8 - length.get() / 2 * Math.abs(resize.get() + 0.5)) < centery.get()) {
+                    centery.set((8 - length.get() / 2 * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати Y були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7 + length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
+                    X.setValueFactory(valueFactoryX_2);
+                }
+                if ((-8 + length.get() / 2 * Math.abs(resize.get() + 0.5)) < centery.get()) {
+                    centery.set((-8 + length.get() / 2 * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати Y були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-7 + length.get() * Math.abs(resize.get() + 0.1), 7 - length.get() * Math.abs(resize.get() + 0.5), centerx.get(), 0.1);
+                    X.setValueFactory(valueFactoryX_2);
+                }
+            } else {
+                if ((8 - length.get() * Math.abs(resize.get() + 0.5)) < centery.get()) {
+                    centery.set((8 - length.get() * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати Y були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryY_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-8 + length.get() * Math.abs(resize.get() + 0.1), 8 - length.get() * Math.abs(resize.get() + 0.5), centery.get(), 0.1);
+                    Y.setValueFactory(valueFactoryY_2);
+                }
+                if ((-8 + length.get() * Math.abs(resize.get() + 0.5)) < centery.get()) {
+                    centery.set((-8 + length.get() * Math.abs(resize.get() + 0.5)));
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Координати Y були невалідні для системи, шестикутник було переміщено на валідні координати для анімації");
+                    errorAlert.showAndWait();
+                    SpinnerValueFactory<Double> valueFactoryY_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-8 + length.get() * Math.abs(resize.get() + 0.1), 8 - length.get() * Math.abs(resize.get() + 0.5), centery.get(), 0.1);
+                    Y.setValueFactory(valueFactoryY_2);
+                }
             }
-            SpinnerValueFactory<Double> valueFactoryY_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-8+ length.get() * Math.abs(resize.get() + 0.1), 8 - length.get() * Math.abs(resize.get() + 0.5), centery.get(), 0.1);
-            Y.setValueFactory(valueFactoryY_2);
+
 
             draw();
             checkIfMove = true;
@@ -527,9 +596,9 @@ public class AFController implements Initializable {
         RESIZE.setValueFactory(valueFactoryResize);
 
         double tmp;
-        try{
+        try {
             tmp = (double) X.getValue();
-        }catch(Exception e){
+        } catch (Exception e) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Неправильне введене X!");
             errorAlert.setContentText("Потрібнно ввести число. Наприклад: 3, 6\nЗначення за замовчуванням - 0.0");
@@ -563,19 +632,7 @@ public class AFController implements Initializable {
 
         X.valueProperty().addListener((ChangeListener<Double>) (observableValue, oldValue, newValue) -> {
 
-
-            double newIm;
-            try{
-                newIm = Double.parseDouble(String.valueOf(newValue));
-            }catch (Exception exception){
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText("Неправильне введення");
-                errorAlert.setContentText("Потрібнно ввести число. Наприклад: 3.9, 4.4\nЗначення за замовчуванням - 0.0");
-                errorAlert.showAndWait();
-                newValue=0.0;
-            }
-
-            SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10+length.get(), 10-length.get() , newValue, 0.1);
+            SpinnerValueFactory<Double> valueFactoryX_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10 + length.get(), 10 - length.get(), newValue, 0.1);
             X.setValueFactory(valueFactoryX_2);
 
             centerx.set(newValue);
@@ -591,7 +648,7 @@ public class AFController implements Initializable {
 
                 {
 
-                    SpinnerValueFactory<Double> valueFactoryY_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10+length.get(), 10-length.get() , newValue, 0.1);
+                    SpinnerValueFactory<Double> valueFactoryY_2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(-10 + length.get(), 10 - length.get(), newValue, 0.1);
                     Y.setValueFactory(valueFactoryY_2);
 
                     centery.set(newValue);
